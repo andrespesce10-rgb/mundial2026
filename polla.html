@@ -10,29 +10,36 @@
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f0f4f8; color: #1a202c; min-height: 100vh; }
 
 /* HEADER */
-.header { background: linear-gradient(135deg, #744210 0%, #92400e 50%, #b45309 100%); color: white; padding: 16px 20px 14px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.3); }
+.header { background: linear-gradient(135deg, #744210 0%, #92400e 50%, #b45309 100%); color: white; padding: 14px 16px 12px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.3); }
 .header-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
-.header-title { font-size: 18px; font-weight: 800; letter-spacing: -0.3px; }
-.header-sub { font-size: 11px; opacity: 0.7; margin-top: 2px; }
+.header-title { font-size: 17px; font-weight: 800; letter-spacing: -0.3px; }
+.header-sub { font-size: 10px; opacity: 0.7; margin-top: 2px; }
 .header-link { font-size: 11px; opacity: 0.8; color: #fde68a; text-decoration: none; border: 1px solid rgba(253,230,138,0.4); border-radius: 12px; padding: 3px 10px; white-space: nowrap; }
-.header-link:hover { opacity: 1; background: rgba(253,230,138,0.15); }
 .sync-bar { font-size: 10px; opacity: 0.75; margin-top: 4px; display: flex; align-items: center; gap: 5px; }
-.sync-dot { width: 6px; height: 6px; border-radius: 50%; background: #86efac; display: inline-block; }
+.sync-dot { width: 6px; height: 6px; border-radius: 50%; background: #86efac; display: inline-block; flex-shrink: 0; }
 .sync-dot.syncing { background: #fde68a; animation: pulse 1s infinite; }
 .sync-dot.error { background: #fca5a5; }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
+/* NAME PICKER */
+.name-picker { background: #7c3aed; padding: 8px 14px; display: flex; align-items: center; gap: 8px; overflow-x: auto; }
+.name-picker::-webkit-scrollbar { height: 0; }
+.name-lbl { font-size: 10px; color: rgba(255,255,255,0.7); font-weight: 600; white-space: nowrap; flex-shrink: 0; }
+.name-btn { padding: 4px 12px; border: 1.5px solid rgba(255,255,255,0.3); border-radius: 20px; background: transparent; color: white; font-size: 12px; font-weight: 700; cursor: pointer; white-space: nowrap; transition: all 0.15s; }
+.name-btn:hover { background: rgba(255,255,255,0.15); }
+.name-btn.active { background: white; color: #7c3aed; border-color: white; }
+
 /* LEADERBOARD */
-.lb-section { background: white; padding: 14px 14px 10px; border-bottom: 1px solid #e2e8f0; }
+.lb-section { background: white; padding: 12px 14px 10px; border-bottom: 1px solid #e2e8f0; }
 .lb-title { font-size: 11px; font-weight: 700; color: #718096; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 10px; }
-.lb-cards { display: flex; gap: 6px; flex-wrap: wrap; }
-.lb-card { display: flex; flex-direction: column; align-items: center; gap: 2px; border-radius: 10px; padding: 8px 10px; min-width: 60px; flex: 1; border: 1.5px solid #e2e8f0; background: #f7fafc; }
+.lb-cards { display: flex; gap: 5px; flex-wrap: wrap; }
+.lb-card { display: flex; flex-direction: column; align-items: center; gap: 2px; border-radius: 10px; padding: 8px 8px; min-width: 58px; flex: 1; border: 1.5px solid #e2e8f0; background: #f7fafc; }
 .lb-card.rank-1 { background: linear-gradient(160deg, #fffaeb, #fef3c7); border-color: #f6c90e; }
 .lb-card.rank-2 { background: linear-gradient(160deg, #f8fafc, #edf2f7); border-color: #a0aec0; }
 .lb-card.rank-3 { background: linear-gradient(160deg, #fff8f5, #feebc8); border-color: #f6ad55; }
-.lb-medal { font-size: 18px; line-height: 1; }
+.lb-medal { font-size: 16px; line-height: 1; }
 .lb-name { font-size: 11px; font-weight: 800; color: #2d3748; }
-.lb-pts { font-size: 22px; font-weight: 900; color: #1a3a5c; line-height: 1; margin-top: 2px; }
+.lb-pts { font-size: 20px; font-weight: 900; color: #1a3a5c; line-height: 1; margin-top: 2px; }
 .lb-lbl { font-size: 9px; color: #a0aec0; text-transform: uppercase; }
 .lb-legend { font-size: 10px; color: #a0aec0; margin-top: 8px; text-align: center; }
 
@@ -49,7 +56,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 /* MATCH CARDS */
 .phase-hdr { font-size: 11px; font-weight: 700; color: #718096; text-transform: uppercase; letter-spacing: 0.8px; margin: 16px 0 8px 2px; display: flex; align-items: center; gap: 6px; }
 .phase-hdr::after { content: ''; flex: 1; height: 1px; background: #e2e8f0; }
-
 .match-card { background: white; border-radius: 10px; margin-bottom: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); border: 1.5px solid #e2e8f0; overflow: hidden; }
 .match-card.is-past { opacity: 0.82; }
 .match-card.is-today { border-color: #feb2b2; }
@@ -74,13 +80,16 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 .pred-row { border-top: 1px dashed #e2e8f0; padding: 8px 10px; display: flex; gap: 4px; background: #fafafa; align-items: flex-start; flex-wrap: wrap; }
 .pred-cell { display: flex; flex-direction: column; align-items: center; gap: 2px; flex: 1; min-width: 50px; }
 .pred-name { font-size: 10px; font-weight: 700; color: #4a5568; }
+.pred-name.is-me { color: #7c3aed; }
 .pred-inputs { display: flex; align-items: center; gap: 2px; }
 .pred-inp { width: 26px; height: 24px; text-align: center; border: 1.5px solid #e2e8f0; border-radius: 5px; font-size: 13px; font-weight: 700; color: #2d3748; background: white; -moz-appearance: textfield; }
 .pred-inp::-webkit-inner-spin-button, .pred-inp::-webkit-outer-spin-button { -webkit-appearance: none; }
-.pred-inp:focus { outline: none; border-color: #b45309; background: #fffbeb; }
+.pred-inp:focus { outline: none; border-color: #7c3aed; background: #f5f3ff; }
+.pred-inp.is-me { border-color: #c4b5fd; }
 .pred-inp:disabled { background: #edf2f7; color: #a0aec0; cursor: default; border-color: #e2e8f0; }
 .pred-sep { font-size: 12px; font-weight: 700; color: #cbd5e0; }
 .pred-pts { font-size: 10px; font-weight: 800; height: 13px; }
+.pts-6 { color: #1a7a4a; }
 .pts-3 { color: #38a169; }
 .pts-1 { color: #d69e2e; }
 .pts-0 { color: #fc8181; }
@@ -92,6 +101,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 .result-inp::-webkit-inner-spin-button, .result-inp::-webkit-outer-spin-button { -webkit-appearance: none; }
 .result-inp:focus { outline: none; border-color: #b45309; }
 
+/* NO NAME BANNER */
+.no-name-banner { background: #f5f3ff; border: 2px dashed #c4b5fd; border-radius: 10px; padding: 16px; text-align: center; color: #6d28d9; font-size: 13px; font-weight: 600; margin-bottom: 12px; }
+
 /* EMPTY */
 .empty { text-align: center; padding: 40px 20px; color: #a0aec0; font-size: 14px; }
 </style>
@@ -102,24 +114,31 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
   <div class="header-row">
     <div>
       <div class="header-title">🏆 Mundial Pesciolini 2026</div>
-      <div class="header-sub">Vale · Mati · Tomi · Mamá · Papá &nbsp;|&nbsp; 🇨🇱 Hora Chile (CLT)</div>
+      <div class="header-sub">Vale · Mati · Tomi · Mamá · Papá &nbsp;|&nbsp; 🇨🇱 Hora Chile</div>
       <div class="sync-bar"><span class="sync-dot" id="sync-dot"></span><span id="sync-txt">Conectando…</span></div>
     </div>
-    <a class="header-link" href="index.html">⚽ Ver calendario</a>
+    <a class="header-link" href="index.html">⚽ Calendario</a>
   </div>
+</div>
+
+<div class="name-picker">
+  <span class="name-lbl">Soy:</span>
+  <button class="name-btn" id="nb-Vale"  onclick="setMyName('Vale')">Vale</button>
+  <button class="name-btn" id="nb-Mati"  onclick="setMyName('Mati')">Mati</button>
+  <button class="name-btn" id="nb-Tomi"  onclick="setMyName('Tomi')">Tomi</button>
+  <button class="name-btn" id="nb-Mamá"  onclick="setMyName('Mamá')">Mamá</button>
+  <button class="name-btn" id="nb-Papá"  onclick="setMyName('Papá')">Papá</button>
 </div>
 
 <div class="lb-section">
   <div class="lb-title">📊 Tabla de posiciones</div>
-  <div class="lb-cards" id="lb-cards">
-    <!-- Rendered by JS -->
-  </div>
-  <div class="lb-legend">🎯 Resultado exacto = 3 pts &nbsp;·&nbsp; ✓ Resultado correcto = 1 pt &nbsp;·&nbsp; ✗ Incorrecto = 0 pts</div>
+  <div class="lb-cards" id="lb-cards"></div>
+  <div class="lb-legend">🎯 Score exacto = 6pts &nbsp;·&nbsp; ↕ Diferencia exacta = 3pts &nbsp;·&nbsp; ✓ Resultado correcto = 1pt</div>
 </div>
 
 <div class="phase-bar">
   <button class="pbtn active" id="pf-all"   onclick="setPhase('all')">Todos</button>
-  <button class="pbtn" id="pf-group" onclick="setPhase('group')">Fase de Grupos</button>
+  <button class="pbtn" id="pf-group" onclick="setPhase('group')">Grupos</button>
   <button class="pbtn" id="pf-r32"   onclick="setPhase('r32')">32avos</button>
   <button class="pbtn" id="pf-r16"   onclick="setPhase('r16')">Octavos</button>
   <button class="pbtn" id="pf-qf"    onclick="setPhase('qf')">Cuartos</button>
@@ -131,7 +150,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 
 <script>
 // ─── MATCH DATA ───────────────────────────────────────────────────────────────
-// Format: [id, chileDate, chileTime, team1, team2, group, phase, venue]
 const MATCHES = [
   [1,"2026-06-11","15:00","Mexico","South Africa","A","group","Ciudad de México"],
   [2,"2026-06-11","22:00","South Korea","Czechia *","A","group","Guadalajara"],
@@ -256,88 +274,126 @@ const PHASE_LABELS = {
   group:"Fase de Grupos", r32:"Round of 32", r16:"Octavos de Final",
   qf:"Cuartos de Final", sf:"Semifinales", "3rd":"Tercer Lugar", final:"Gran Final 🏆"
 };
-const DAY_NAMES = ["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"];
+const DAY_NAMES   = ["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"];
 const MONTH_NAMES = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago"];
-
-// ─── PERSONS ─────────────────────────────────────────────────────────────────
 const PERSONS = ["Vale","Mati","Tomi","Mamá","Papá"];
 const MEDALS  = ["🥇","🥈","🥉","4️⃣","5️⃣"];
 
-// ─── CONFIG ──────────────────────────────────────────────────────────────────
-var FIREBASE_URL = "https://mundial-924df-default-rtdb.firebaseio.com/polla26.json";
+// ─── CONFIG ───────────────────────────────────────────────────────────────────
+var FIREBASE = "https://mundial-924df-default-rtdb.firebaseio.com/polla26";
 
-// ─── STATE ───────────────────────────────────────────────────────────────────
-// Initialize from localStorage immediately so data survives page reloads
-var predictions = (function(){ try { return JSON.parse(localStorage.getItem("polla26_preds")||"{}"); } catch(e){ return {}; } })();
-var actuals     = (function(){ try { return JSON.parse(localStorage.getItem("polla26_actuals")||"{}"); } catch(e){ return {}; } })();
+// ─── STATE ────────────────────────────────────────────────────────────────────
+// Each person's predictions stored separately — prevents overwriting others
+// predictions[matchId][person] = [g1, g2]  — merged from all firebase paths
+// actuals[matchId] = [g1, g2]
+var predictions = {};
+var actuals     = {};
+var myName      = localStorage.getItem("polla26_name") || null;
 var activePhase = "all";
-var saveTimer = null;
+var saveTimer   = null;
 
+// ─── SYNC STATUS ──────────────────────────────────────────────────────────────
 function setSyncStatus(state, msg) {
   var dot = document.getElementById("sync-dot");
   var txt = document.getElementById("sync-txt");
-  if (!dot || !txt) return;
-  dot.className = "sync-dot" + (state==="syncing" ? " syncing" : state==="error" ? " error" : "");
+  if (!dot||!txt) return;
+  dot.className = "sync-dot"+(state==="syncing"?" syncing":state==="error"?" error":"");
   txt.textContent = msg;
 }
 
+// ─── FIREBASE LOAD ────────────────────────────────────────────────────────────
 function loadData() {
-  setSyncStatus("syncing", "Cargando…");
-  fetch(FIREBASE_URL)
+  setSyncStatus("syncing","Cargando…");
+  fetch(FIREBASE + ".json")
     .then(function(r){ return r.json(); })
     .then(function(data) {
-      if (data && data.predictions && Object.keys(data.predictions).length > 0)
-        predictions = data.predictions;
-      if (data && data.actuals && Object.keys(data.actuals).length > 0)
-        actuals = data.actuals;
+      if (data) {
+        // Merge all persons' predictions from firebase
+        var fp = data.predictions || {};
+        PERSONS.forEach(function(p) {
+          if (fp[p]) {
+            Object.keys(fp[p]).forEach(function(mid) {
+              if (!predictions[mid]) predictions[mid] = {};
+              predictions[mid][p] = fp[p][mid];
+            });
+          }
+        });
+        // Load actuals
+        if (data.actuals) actuals = data.actuals;
+      }
       renderLeaderboard();
       render();
       var now = new Date().toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"});
-      setSyncStatus("ok", "Sincronizado " + now);
+      setSyncStatus("ok","Sincronizado "+now);
     })
     .catch(function() {
-      setSyncStatus("error", "Sin conexión");
+      setSyncStatus("error","Sin conexión");
     });
 }
 
+// ─── FIREBASE SAVE (per-person path) ─────────────────────────────────────────
+function saveMyPredictions() {
+  if (!myName) return;
+  // Extract only this person's predictions
+  var mine = {};
+  Object.keys(predictions).forEach(function(mid) {
+    if (predictions[mid] && predictions[mid][myName] !== undefined) {
+      mine[mid] = predictions[mid][myName];
+    }
+  });
+  // PUT to person-specific path — never overwrites others
+  fetch(FIREBASE + "/predictions/" + encodeURIComponent(myName) + ".json", {
+    method: "PUT",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(mine)
+  })
+  .then(function(r){ return r.json(); })
+  .then(function() {
+    var now = new Date().toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"});
+    setSyncStatus("ok","Guardado "+now);
+  })
+  .catch(function() {
+    setSyncStatus("error","Error al guardar");
+  });
+}
+
+function saveActuals() {
+  fetch(FIREBASE + "/actuals.json", {
+    method: "PUT",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(actuals)
+  }).catch(function(){});
+}
+
 function saveData() {
-  try {
-    localStorage.setItem("polla26_preds",   JSON.stringify(predictions));
-    localStorage.setItem("polla26_actuals", JSON.stringify(actuals));
-  } catch(e) {}
   clearTimeout(saveTimer);
   saveTimer = setTimeout(function() {
-    setSyncStatus("syncing", "Guardando…");
-    var payload = JSON.stringify({predictions: predictions, actuals: actuals});
-    fetch(FIREBASE_URL, {
-      method: "PUT",
-      headers: {"Content-Type": "application/json"},
-      body: payload
-    })
-    .then(function(r){ return r.json(); })
-    .then(function() {
-      var now = new Date().toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"});
-      setSyncStatus("ok", "Guardado " + now);
-    })
-    .catch(function() {
-      setSyncStatus("error", "Error al guardar");
-    });
+    setSyncStatus("syncing","Guardando…");
+    saveMyPredictions();
   }, 800);
+}
+
+// ─── NAME SELECTOR ────────────────────────────────────────────────────────────
+function setMyName(name) {
+  myName = name;
+  localStorage.setItem("polla26_name", name);
+  document.querySelectorAll(".name-btn").forEach(function(b) {
+    b.classList.toggle("active", b.id === "nb-"+name);
+  });
+  render();
 }
 
 // ─── TIME HELPERS ─────────────────────────────────────────────────────────────
 function chileToday() {
-  try { return new Intl.DateTimeFormat("sv", {timeZone:"America/Santiago"}).format(new Date()); }
+  try { return new Intl.DateTimeFormat("sv",{timeZone:"America/Santiago"}).format(new Date()); }
   catch(e) { return new Date(new Date().getTime()-4*3600000).toISOString().split("T")[0]; }
 }
-
 function chileNowMins() {
   try {
     var s = new Intl.DateTimeFormat("en-GB",{timeZone:"America/Santiago",hour:"2-digit",minute:"2-digit",hour12:false}).format(new Date());
     var p = s.split(":").map(Number); return p[0]*60+p[1];
   } catch(e) { var d=new Date(new Date().getTime()-4*3600000); return d.getUTCHours()*60+d.getUTCMinutes(); }
 }
-
 function getStatus(date, time) {
   var today = chileToday();
   if (date < today) return "past";
@@ -347,34 +403,36 @@ function getStatus(date, time) {
   if (nm >= mm) return "live";
   return "today";
 }
-
 function fmtDate(d) {
   var dt = new Date(d+"T12:00:00");
   return DAY_NAMES[dt.getDay()]+" "+dt.getDate()+" "+MONTH_NAMES[dt.getMonth()];
 }
+function flag(t) { return FLAGS[t]||"🏳️"; }
 
-function flag(t) { return FLAGS[t] || "🏳️"; }
-
-// ─── SCORING ─────────────────────────────────────────────────────────────────
+// ─── SCORING: 6 exact / 3 goal diff / 1 result ────────────────────────────────
 function calcPts(matchId, person) {
-  var mid = String(matchId), act = actuals[mid];
-  if (!act || act[0]===null || act[1]===null) return null;
-  var pred = predictions[mid] && predictions[mid][person];
-  if (!pred || pred[0]===null || pred[1]===null) return 0;
-  if (pred[0]===act[0] && pred[1]===act[1]) return 3;
-  return Math.sign(pred[0]-pred[1])===Math.sign(act[0]-act[1]) ? 1 : 0;
+  var mid = String(matchId);
+  var act = actuals[mid];
+  if (!act||act[0]===null||act[1]===null) return null;
+  var pred = predictions[mid]&&predictions[mid][person];
+  if (!pred||pred[0]===null||pred[1]===null) return 0;
+  if (pred[0]===act[0]&&pred[1]===act[1]) return 6;          // score exact
+  if ((pred[0]-pred[1])===(act[0]-act[1])) return 3;         // goal diff exact
+  if (Math.sign(pred[0]-pred[1])===Math.sign(act[0]-act[1])) return 1; // result
+  return 0;
 }
 
 function totalPts(person) {
-  return MATCHES.reduce(function(s,m){ var p=calcPts(m[0],person); return s+(p||0); }, 0);
+  return MATCHES.reduce(function(s,m){ var p=calcPts(m[0],person); return s+(p||0); },0);
 }
 
-// ─── INPUTS ──────────────────────────────────────────────────────────────────
+// ─── INPUTS ───────────────────────────────────────────────────────────────────
 function setPred(matchId, person, idx, val) {
+  if (person !== myName) return; // only edit your own
   var mid = String(matchId);
   if (!predictions[mid]) predictions[mid] = {};
   if (!predictions[mid][person]) predictions[mid][person] = [null,null];
-  predictions[mid][person][idx] = (val===""||val===null) ? null : parseInt(val);
+  predictions[mid][person][idx] = (val===""||val===null)?null:parseInt(val);
   saveData();
   refreshPts(matchId);
   renderLeaderboard();
@@ -383,8 +441,14 @@ function setPred(matchId, person, idx, val) {
 function setActual(matchId, idx, val) {
   var mid = String(matchId);
   if (!actuals[mid]) actuals[mid] = [null,null];
-  actuals[mid][idx] = (val===""||val===null) ? null : parseInt(val);
-  saveData();
+  actuals[mid][idx] = (val===""||val===null)?null:parseInt(val);
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(function(){
+    setSyncStatus("syncing","Guardando…");
+    saveActuals();
+    var now = new Date().toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"});
+    setSyncStatus("ok","Guardado "+now);
+  },800);
   refreshPts(matchId);
   renderLeaderboard();
 }
@@ -394,28 +458,28 @@ function refreshPts(matchId) {
     var el = document.getElementById("pts_"+matchId+"_"+p);
     if (!el) return;
     var pts = calcPts(matchId, p);
-    if (pts===null) { el.textContent=""; el.className="pred-pts"; return; }
-    el.textContent = pts===3?"🎯 3pts":pts===1?"✓ 1pt":"✗ 0pts";
-    el.className = "pred-pts "+(pts===3?"pts-3":pts===1?"pts-1":"pts-0");
+    if (pts===null){el.textContent="";el.className="pred-pts";return;}
+    el.textContent = pts===6?"🎯 6pts":pts===3?"↕ 3pts":pts===1?"✓ 1pt":"✗ 0pts";
+    el.className = "pred-pts "+(pts===6?"pts-6":pts===3?"pts-3":pts===1?"pts-1":"pts-0");
   });
 }
 
-// ─── LEADERBOARD ─────────────────────────────────────────────────────────────
+// ─── LEADERBOARD ──────────────────────────────────────────────────────────────
 function renderLeaderboard() {
-  var standings = PERSONS.map(function(p){ return {name:p, pts:totalPts(p)}; })
+  var standings = PERSONS.map(function(p){ return {name:p,pts:totalPts(p)}; })
     .sort(function(a,b){ return b.pts-a.pts; });
   var rankClass = ["rank-1","rank-2","rank-3","",""];
   document.getElementById("lb-cards").innerHTML = standings.map(function(s,i){
-    return '<div class="lb-card '+rankClass[i]+'">' +
-      '<div class="lb-medal">'+MEDALS[i]+'</div>' +
-      '<div class="lb-name">'+s.name+'</div>' +
-      '<div class="lb-pts">'+s.pts+'</div>' +
-      '<div class="lb-lbl">pts</div>' +
+    return '<div class="lb-card '+rankClass[i]+'">'+
+      '<div class="lb-medal">'+MEDALS[i]+'</div>'+
+      '<div class="lb-name">'+s.name+'</div>'+
+      '<div class="lb-pts">'+s.pts+'</div>'+
+      '<div class="lb-lbl">pts</div>'+
       '</div>';
   }).join("");
 }
 
-// ─── PHASE FILTER ────────────────────────────────────────────────────────────
+// ─── PHASE FILTER ─────────────────────────────────────────────────────────────
 function setPhase(p) {
   activePhase = p;
   document.querySelectorAll(".pbtn").forEach(function(b){ b.classList.remove("active"); });
@@ -423,117 +487,58 @@ function setPhase(p) {
   render();
 }
 
-// ─── RENDER ──────────────────────────────────────────────────────────────────
+// ─── RENDER ───────────────────────────────────────────────────────────────────
 function render() {
   var today = chileToday();
-
-  // Filter
   var filtered = MATCHES.filter(function(m){
     if (activePhase==="all") return true;
     if (activePhase==="final") return m[6]==="final"||m[6]==="3rd";
     return m[6]===activePhase;
   });
-
-  // Sort chronologically by date + time
   filtered.sort(function(a,b){
-    var ka = a[1]+a[2], kb = b[1]+b[2];
-    return ka < kb ? -1 : ka > kb ? 1 : 0;
+    var ka=a[1]+a[2], kb=b[1]+b[2];
+    return ka<kb?-1:ka>kb?1:0;
   });
 
   var html = "";
+  if (!myName) {
+    html += '<div class="no-name-banner">👆 Selecciona tu nombre arriba para ingresar tus pronósticos</div>';
+  }
+
   var lastDate = null;
-  filtered.forEach(function(m){
-    // Date header when date changes
-    if (m[1] !== lastDate) {
-      lastDate = m[1];
-      var dt = new Date(m[1]+"T12:00:00");
-      var dateLabel = ["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"][dt.getDay()]+" "+dt.getDate()+" "+["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago"][dt.getMonth()]+" · "+PHASE_LABELS[m[6]];
-      html += '<div class="phase-hdr">'+dateLabel+'</div>';
+  filtered.forEach(function(m) {
+    var id=m[0],date=m[1],time=m[2],t1=m[3],t2=m[4],phase=m[6];
+    if (date !== lastDate) {
+      lastDate = date;
+      var dt = new Date(date+"T12:00:00");
+      var dl = DAY_NAMES[dt.getDay()]+" "+dt.getDate()+" "+MONTH_NAMES[dt.getMonth()]+" · "+PHASE_LABELS[phase];
+      html += '<div class="phase-hdr">'+dl+'</div>';
     }
-    {
-      var id=m[0], date=m[1], time=m[2], t1=m[3], t2=m[4], group=m[5], phase=m[6], venue=m[7];
-      var st = getStatus(date, time);
-      var cardClass = st==="past"?"is-past":(st==="live"||st==="today")?"is-today":phase==="final"?"is-final":"";
-      var statusHtml = st==="live"
-        ? '<div class="match-status status-live">🔴 EN VIVO</div>'
-        : st==="today"
-        ? '<div class="match-status status-today">⏰ Hoy</div>'
-        : st==="past"
-        ? '<div class="match-status status-past">Finalizado</div>'
-        : "";
-      var canPred = st==="future"||st==="today";
-      var mid = String(id);
-      var act = actuals[mid]||[null,null];
+    var st = getStatus(date,time);
+    var cardClass = st==="past"?"is-past":(st==="live"||st==="today")?"is-today":phase==="final"?"is-final":"";
+    var statusHtml = st==="live"
+      ?'<div class="match-status status-live">🔴 EN VIVO</div>'
+      :st==="today"?'<div class="match-status status-today">⏰ Hoy</div>'
+      :st==="past"?'<div class="match-status status-past">Finalizado</div>':"";
+    var canPred = st==="future"||st==="today";
+    var mid = String(id);
+    var act = actuals[mid]||[null,null];
 
-      // Prediction cells
-      var predCells = PERSONS.map(function(p){
-        var pred = (predictions[mid]&&predictions[mid][p])||[null,null];
-        var v1 = pred[0]!==null?pred[0]:"", v2 = pred[1]!==null?pred[1]:"";
-        var dis = canPred?"":"disabled";
-        return '<div class="pred-cell">' +
-          '<div class="pred-name">'+p+'</div>' +
-          '<div class="pred-inputs">' +
-            '<input class="pred-inp" type="number" min="0" max="20" value="'+v1+'" placeholder="?" '+
-              'oninput="setPred('+id+',\''+p+'\''+',0,this.value)" '+dis+'>' +
-            '<span class="pred-sep">:</span>' +
-            '<input class="pred-inp" type="number" min="0" max="20" value="'+v2+'" placeholder="?" '+
-              'oninput="setPred('+id+',\''+p+'\''+',1,this.value)" '+dis+'>' +
-          '</div>' +
-          '<div class="pred-pts" id="pts_'+id+'_'+p+'"></div>' +
-          '</div>';
-      }).join("");
-
-      // Result cell (only for past/live)
-      var resultCell = (!canPred) ?
-        '<div class="result-cell">' +
-          '<div class="result-label">Resultado</div>' +
-          '<div class="pred-inputs">' +
-            '<input class="result-inp" type="number" min="0" max="20" value="'+(act[0]!==null?act[0]:"")+'" placeholder="?" '+
-              'oninput="setActual('+id+',0,this.value)">' +
-            '<span class="pred-sep">:</span>' +
-            '<input class="result-inp" type="number" min="0" max="20" value="'+(act[1]!==null?act[1]:"")+'" placeholder="?" '+
-              'oninput="setActual('+id+',1,this.value)">' +
-          '</div>' +
-          '<div style="height:13px"></div>' +
-          '</div>' : "";
-
-      html +=
-        '<div class="match-card '+cardClass+'" id="mc_'+id+'">' +
-          '<div class="match-top">' +
-            '<div class="match-teams">' +
-              '<div class="team-line"><span class="tflag">'+flag(t1)+'</span><span class="tname">'+t1+'</span></div>' +
-              '<div class="match-vs">vs</div>' +
-              '<div class="team-line"><span class="tflag">'+flag(t2)+'</span><span class="tname">'+t2+'</span></div>' +
-            '</div>' +
-            '<div class="match-info">' +
-              '<div class="match-time">'+time+' CLT</div>' +
-              '<div class="match-date">'+fmtDate(date)+'</div>' +
-              statusHtml +
-            '</div>' +
-          '</div>' +
-          '<div class="pred-row">'+predCells+resultCell+'</div>' +
+    var predCells = PERSONS.map(function(p){
+      var pred = (predictions[mid]&&predictions[mid][p])||[null,null];
+      var v1 = pred[0]!==null?pred[0]:"", v2 = pred[1]!==null?pred[1]:"";
+      var isMe = p===myName;
+      var canEdit = canPred && isMe;
+      var dis = canEdit?"":"disabled";
+      var meClass = isMe?" is-me":"";
+      return '<div class="pred-cell">'+
+        '<div class="pred-name'+meClass+'">'+p+(isMe?" ✏️":"")+'</div>'+
+        '<div class="pred-inputs">'+
+          '<input class="pred-inp'+meClass+'" type="number" min="0" max="20" value="'+v1+'" placeholder="?" '+
+            'oninput="setPred('+id+',\''+p+'\',0,this.value)" '+dis+'>'+
+          '<span class="pred-sep">:</span>'+
+          '<input class="pred-inp'+meClass+'" type="number" min="0" max="20" value="'+v2+'" placeholder="?" '+
+            'oninput="setPred('+id+',\''+p+'\',1,this.value)" '+dis+'>'+
+        '</div>'+
+        '<div class="pred-pts" id="pts_'+id+'_'+p+'"></div>'+
         '</div>';
-    }
-  });
-
-  document.getElementById("content").innerHTML = html || '<div class="empty">No hay partidos en esta fase 🔍</div>';
-
-  // Refresh all pts displays
-  MATCHES.forEach(function(m){ refreshPts(m[0]); });
-}
-
-// ─── INIT ──────────────────────────────────────────────────────────────────────────────
-// Render matches immediately so page never appears blank
-renderLeaderboard();
-render();
-// Then load data from Sheet and refresh
-loadData();
-// Poll every 30 seconds for updates from other family members
-setInterval(loadData, 30000);
-// Also reload when tab becomes visible again
-document.addEventListener("visibilitychange", function(){
-  if (document.visibilityState === "visible") loadData();
-});
-</script>
-</body>
-</html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
