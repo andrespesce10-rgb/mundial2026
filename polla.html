@@ -317,14 +317,19 @@ function saveData() {
     var payload = JSON.stringify({predictions: predictions, actuals: actuals});
     fetch(SHEET_URL, {
       method: "POST",
-      mode: "no-cors",
       headers: {"Content-Type": "text/plain"},
       body: payload
-    }).then(function() {
+    }).then(function(r){ return r.json(); })
+    .then(function() {
       var now = new Date().toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"});
       setSyncStatus("ok", "Guardado " + now);
     }).catch(function() {
-      setSyncStatus("error", "Error al guardar");
+      // Fallback: save via GET with encoded data
+      fetch(SHEET_URL + "?data=" + encodeURIComponent(payload))
+        .then(function(){
+          var now = new Date().toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"});
+          setSyncStatus("ok", "Guardado " + now);
+        }).catch(function(){ setSyncStatus("error", "Error al guardar"); });
     });
   }, 800);
 }
