@@ -575,18 +575,9 @@ function render() {
   MATCHES.forEach(function(m){ refreshPts(m[0]); });
 }
 
-// INIT
-if (myName) {
-  var nb = document.getElementById("nb-"+myName);
-  if (nb) nb.classList.add("active");
-}
-renderLeaderboard();
-render();
-loadData();
-setInterval(loadData, 30000);
-document.addEventListener("visibilitychange", function(){
-  if (document.visibilityState==="visible") loadData();
-});
-</script>
-</body>
-</html>
+// ─── FOOTBALL API AUTO-RESULTS ────────────────────────────────────────────────
+var FDAPI = "https://api.football-data.org/v4/competitions/WC/matches";
+var FDKEY = "a3406a3044594d8db5526eaa412bfb92";
+var lastApiFetch = 0;
+
+va
