@@ -438,20 +438,23 @@ function render() {
     return m[6]===activePhase;
   });
 
-  // Group by phase
-  var byPhase = {};
-  var phaseOrder = ["group","r32","r16","qf","sf","3rd","final"];
-  filtered.forEach(function(m){
-    var ph = m[6];
-    if (!byPhase[ph]) byPhase[ph] = [];
-    byPhase[ph].push(m);
+  // Sort chronologically by date + time
+  filtered.sort(function(a,b){
+    var ka = a[1]+a[2], kb = b[1]+b[2];
+    return ka < kb ? -1 : ka > kb ? 1 : 0;
   });
 
   var html = "";
-  phaseOrder.forEach(function(ph){
-    if (!byPhase[ph]) return;
-    html += '<div class="phase-hdr">'+PHASE_LABELS[ph]+'</div>';
-    byPhase[ph].forEach(function(m){
+  var lastDate = null;
+  filtered.forEach(function(m){
+    // Date header when date changes
+    if (m[1] !== lastDate) {
+      lastDate = m[1];
+      var dt = new Date(m[1]+"T12:00:00");
+      var dateLabel = ["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"][dt.getDay()]+" "+dt.getDate()+" "+["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago"][dt.getMonth()]+" · "+PHASE_LABELS[m[6]];
+      html += '<div class="phase-hdr">'+dateLabel+'</div>';
+    }
+    {
       var id=m[0], date=m[1], time=m[2], t1=m[3], t2=m[4], group=m[5], phase=m[6], venue=m[7];
       var st = getStatus(date, time);
       var cardClass = st==="past"?"is-past":(st==="live"||st==="today")?"is-today":phase==="final"?"is-final":"";
@@ -514,7 +517,7 @@ function render() {
           '</div>' +
           '<div class="pred-row">'+predCells+resultCell+'</div>' +
         '</div>';
-    });
+    }
   });
 
   document.getElementById("content").innerHTML = html || '<div class="empty">No hay partidos en esta fase 🔍</div>';
