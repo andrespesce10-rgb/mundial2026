@@ -133,7 +133,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 <div class="lb-section">
   <div class="lb-title">📊 Tabla de posiciones</div>
   <div class="lb-cards" id="lb-cards"></div>
-  <div class="lb-legend">🎯 Score exacto = 6pts &nbsp;·&nbsp; ↕ Diferencia exacta = 3pts &nbsp;·&nbsp; ✓ Resultado correcto = 1pt</div>
+  <div class="lb-legend">🎯 Score exacto = 6pts &nbsp;·&nbsp; ↕ Diferencia exacta = 4pts &nbsp;·&nbsp; ✓ Resultado correcto = 2pts</div>
 </div>
 
 <div class="phase-bar">
@@ -417,8 +417,8 @@ function calcPts(matchId, person) {
   var pred = predictions[mid]&&predictions[mid][person];
   if (!pred||pred[0]===null||pred[1]===null) return 0;
   if (pred[0]===act[0]&&pred[1]===act[1]) return 6;          // score exact
-  if ((pred[0]-pred[1])===(act[0]-act[1])) return 3;         // goal diff exact
-  if (Math.sign(pred[0]-pred[1])===Math.sign(act[0]-act[1])) return 1; // result
+  if ((pred[0]-pred[1])===(act[0]-act[1])) return 4;         // goal diff exact
+  if (Math.sign(pred[0]-pred[1])===Math.sign(act[0]-act[1])) return 2; // result
   return 0;
 }
 
@@ -459,8 +459,8 @@ function refreshPts(matchId) {
     if (!el) return;
     var pts = calcPts(matchId, p);
     if (pts===null){el.textContent="";el.className="pred-pts";return;}
-    el.textContent = pts===6?"🎯 6pts":pts===3?"↕ 3pts":pts===1?"✓ 1pt":"✗ 0pts";
-    el.className = "pred-pts "+(pts===6?"pts-6":pts===3?"pts-3":pts===1?"pts-1":"pts-0");
+    el.textContent = pts===6?"🎯 6pts":pts===4?"↕ 4pts":pts===2?"✓ 2pts":"✗ 0pts";
+    el.className = "pred-pts "+(pts===6?"pts-6":pts===4?"pts-3":pts===2?"pts-1":"pts-0");
   });
 }
 
