@@ -475,4 +475,66 @@ function render() {
           '<div class="pred-name">'+p+'</div>' +
           '<div class="pred-inputs">' +
             '<input class="pred-inp" type="number" min="0" max="20" value="'+v1+'" placeholder="?" '+
-              'oninput="setPred('
+              'oninput="setPred('+id+',\''+p+'\''+',0,this.value)" '+dis+'>' +
+            '<span class="pred-sep">:</span>' +
+            '<input class="pred-inp" type="number" min="0" max="20" value="'+v2+'" placeholder="?" '+
+              'oninput="setPred('+id+',\''+p+'\''+',1,this.value)" '+dis+'>' +
+          '</div>' +
+          '<div class="pred-pts" id="pts_'+id+'_'+p+'"></div>' +
+          '</div>';
+      }).join("");
+
+      // Result cell (only for past/live)
+      var resultCell = (!canPred) ?
+        '<div class="result-cell">' +
+          '<div class="result-label">Resultado</div>' +
+          '<div class="pred-inputs">' +
+            '<input class="result-inp" type="number" min="0" max="20" value="'+(act[0]!==null?act[0]:"")+'" placeholder="?" '+
+              'oninput="setActual('+id+',0,this.value)">' +
+            '<span class="pred-sep">:</span>' +
+            '<input class="result-inp" type="number" min="0" max="20" value="'+(act[1]!==null?act[1]:"")+'" placeholder="?" '+
+              'oninput="setActual('+id+',1,this.value)">' +
+          '</div>' +
+          '<div style="height:13px"></div>' +
+          '</div>' : "";
+
+      html +=
+        '<div class="match-card '+cardClass+'" id="mc_'+id+'">' +
+          '<div class="match-top">' +
+            '<div class="match-teams">' +
+              '<div class="team-line"><span class="tflag">'+flag(t1)+'</span><span class="tname">'+t1+'</span></div>' +
+              '<div class="match-vs">vs</div>' +
+              '<div class="team-line"><span class="tflag">'+flag(t2)+'</span><span class="tname">'+t2+'</span></div>' +
+            '</div>' +
+            '<div class="match-info">' +
+              '<div class="match-time">'+time+' CLT</div>' +
+              '<div class="match-date">'+fmtDate(date)+'</div>' +
+              statusHtml +
+            '</div>' +
+          '</div>' +
+          '<div class="pred-row">'+predCells+resultCell+'</div>' +
+        '</div>';
+    });
+  });
+
+  document.getElementById("content").innerHTML = html || '<div class="empty">No hay partidos en esta fase 🔍</div>';
+
+  // Refresh all pts displays
+  MATCHES.forEach(function(m){ refreshPts(m[0]); });
+}
+
+// ─── INIT ──────────────────────────────────────────────────────────────────────────────
+// Render matches immediately so page never appears blank
+renderLeaderboard();
+render();
+// Then load data from Sheet and refresh
+loadData();
+// Poll every 30 seconds for updates from other family members
+setInterval(loadData, 30000);
+// Also reload when tab becomes visible again
+document.addEventListener("visibilitychange", function(){
+  if (document.visibilityState === "visible") loadData();
+});
+</script>
+</body>
+</html>
