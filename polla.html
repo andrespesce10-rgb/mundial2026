@@ -281,7 +281,6 @@ function setSyncStatus(state, msg) {
 }
 
 function fetchWithProxy(url, onSuccess, onFail) {
-  // Try corsproxy.io first, then allorigins as fallback
   fetch("https://corsproxy.io/?" + encodeURIComponent(url))
     .then(function(r){ return r.json(); })
     .then(onSuccess)
@@ -289,7 +288,7 @@ function fetchWithProxy(url, onSuccess, onFail) {
       fetch("https://api.allorigins.win/raw?url=" + encodeURIComponent(url))
         .then(function(r){ return r.json(); })
         .then(onSuccess)
-        .catch(onFail);
+        .catch(onFail || function(){});
     });
 }
 
@@ -298,8 +297,12 @@ function loadData() {
   fetchWithProxy(
     SHEET_URL,
     function(data) {
-      predictions = (data && data.predictions) || {};
-      actuals     = (data && data.actuals)     || {};
+      var sp = data && data.predictions;
+      var sa = data && data.actuals;
+      // Only overwrite local data if server has actual predictions
+      // (prevents polling from wiping unsaved local data)
+      if (sp && Object.keys(sp).length > 0) predictions = sp;
+      if (sa && Object.keys(sa).length > 0) actuals = sa;
       renderLeaderboard();
       render();
       var now = new Date().toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"});
@@ -320,18 +323,29 @@ function saveData() {
   saveTimer = setTimeout(function() {
     setSyncStatus("syncing", "Guardando…");
     var payload = JSON.stringify({predictions: predictions, actuals: actuals});
-    // no-cors: request IS sent, response is opaque (that's ok)
-    fetch(SHEET_URL, {
+    // Use proxy for POST — proxy handles CORS and follows redirects server-side
+    fetch("https://corsproxy.io/?" + encodeURIComponent(SHEET_URL), {
       method: "POST",
-      mode: "no-cors",
       headers: {"Content-Type": "text/plain"},
       body: payload
-    }).then(function() {
+    })
+    .then(function(r){ return r.text(); })
+    .then(function() {
       var now = new Date().toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"});
       setSyncStatus("ok", "Guardado " + now);
-      setTimeout(loadData, 2000);
-    }).catch(function() {
-      setSyncStatus("error", "Error al guardar");
+    })
+    .catch(function() {
+      // Fallback: no-cors direct POST (request sent, response opaque)
+      fetch(SHEET_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {"Content-Type": "text/plain"},
+        body: payload
+      }).then(function() {
+        setSyncStatus("ok", "Guardado (local)");
+      }).catch(function() {
+        setSyncStatus("error", "Error al guardar");
+      });
     });
   }, 800);
 }
@@ -541,10 +555,4 @@ render();
 loadData();
 // Poll every 30 seconds for updates from other family members
 setInterval(loadData, 30000);
-// Also reload when tab becomes visible again
-document.addEventListener("visibilitychange", function(){
-  if (document.visibilityState === "visible") loadData();
-});
-</script>
-</body>
-</html>                                                                                                                                                                                                                                                                                                                                                                                                         
+// Also reload
