@@ -282,26 +282,33 @@ function setSyncStatus(state, msg) {
 
 function loadData() {
   setSyncStatus("syncing", "Cargando…");
-  fetch(SHEET_URL)
-    .then(function(r){ return r.json(); })
-    .then(function(data) {
-      predictions = data.predictions || {};
-      actuals     = data.actuals     || {};
-      renderLeaderboard();
-      render();
-      var now = new Date().toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"});
-      setSyncStatus("ok", "Sincronizado " + now);
-    })
-    .catch(function() {
-      // Fallback to localStorage
-      try {
-        predictions = JSON.parse(localStorage.getItem("polla26_preds") || "{}");
-        actuals     = JSON.parse(localStorage.getItem("polla26_actuals") || "{}");
-      } catch(e) { predictions = {}; actuals = {}; }
-      setSyncStatus("error", "Sin conexión (datos locales)");
-      renderLeaderboard();
-      render();
-    });
+  // Use JSONP to bypass CORS
+  var cbName = "__polla_cb_" + Date.now();
+  var script = document.createElement("script");
+  var timeout = setTimeout(function() {
+    script.remove();
+    delete window[cbName];
+    setSyncStatus("error", "Sin conexión");
+  }, 8000);
+  window[cbName] = function(data) {
+    clearTimeout(timeout);
+    script.remove();
+    delete window[cbName];
+    predictions = (data && data.predictions) || {};
+    actuals     = (data && data.actuals)     || {};
+    renderLeaderboard();
+    render();
+    var now = new Date().toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"});
+    setSyncStatus("ok", "Sincronizado " + now);
+  };
+  script.src = SHEET_URL + "?callback=" + cbName + "&_=" + Date.now();
+  script.onerror = function() {
+    clearTimeout(timeout);
+    script.remove();
+    delete window[cbName];
+    setSyncStatus("error", "Sin conexión");
+  };
+  document.head.appendChild(script);
 }
 
 function saveData() {
