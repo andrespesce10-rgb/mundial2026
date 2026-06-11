@@ -264,7 +264,7 @@ const PERSONS = ["Vale","Mati","Tomi","Mamá","Papá"];
 const MEDALS  = ["🥇","🥈","🥉","4️⃣","5️⃣"];
 
 // ─── CONFIG ──────────────────────────────────────────────────────────────────
-var SHEET_URL = "https://script.google.com/macros/s/AKfycbwSYnHcns5x2ZXt_TAvHKkJz10llKzq38vjDvaWlUoalzxn3a5kz_vcULisbZGjX42U/exec";
+var FIREBASE_URL = "https://mundial-924df-default-rtdb.firebaseio.com/polla26.json";
 
 // ─── STATE ───────────────────────────────────────────────────────────────────
 // Initialize from localStorage immediately so data survives page reloads
@@ -281,38 +281,23 @@ function setSyncStatus(state, msg) {
   txt.textContent = msg;
 }
 
-function fetchWithProxy(url, onSuccess, onFail) {
-  fetch("https://corsproxy.io/?" + encodeURIComponent(url))
-    .then(function(r){ return r.json(); })
-    .then(onSuccess)
-    .catch(function() {
-      fetch("https://api.allorigins.win/raw?url=" + encodeURIComponent(url))
-        .then(function(r){ return r.json(); })
-        .then(onSuccess)
-        .catch(onFail || function(){});
-    });
-}
-
 function loadData() {
   setSyncStatus("syncing", "Cargando…");
-  fetchWithProxy(
-    SHEET_URL,
-    function(data) {
-      var sp = data && data.predictions;
-      var sa = data && data.actuals;
-      // Only overwrite local data if server has actual predictions
-      // (prevents polling from wiping unsaved local data)
-      if (sp && Object.keys(sp).length > 0) predictions = sp;
-      if (sa && Object.keys(sa).length > 0) actuals = sa;
+  fetch(FIREBASE_URL)
+    .then(function(r){ return r.json(); })
+    .then(function(data) {
+      if (data && data.predictions && Object.keys(data.predictions).length > 0)
+        predictions = data.predictions;
+      if (data && data.actuals && Object.keys(data.actuals).length > 0)
+        actuals = data.actuals;
       renderLeaderboard();
       render();
       var now = new Date().toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"});
       setSyncStatus("ok", "Sincronizado " + now);
-    },
-    function() {
+    })
+    .catch(function() {
       setSyncStatus("error", "Sin conexión");
-    }
-  );
+    });
 }
 
 function saveData() {
@@ -324,29 +309,18 @@ function saveData() {
   saveTimer = setTimeout(function() {
     setSyncStatus("syncing", "Guardando…");
     var payload = JSON.stringify({predictions: predictions, actuals: actuals});
-    // Use proxy for POST — proxy handles CORS and follows redirects server-side
-    fetch("https://corsproxy.io/?" + encodeURIComponent(SHEET_URL), {
-      method: "POST",
-      headers: {"Content-Type": "text/plain"},
+    fetch(FIREBASE_URL, {
+      method: "PUT",
+      headers: {"Content-Type": "application/json"},
       body: payload
     })
-    .then(function(r){ return r.text(); })
+    .then(function(r){ return r.json(); })
     .then(function() {
       var now = new Date().toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"});
       setSyncStatus("ok", "Guardado " + now);
     })
     .catch(function() {
-      // Fallback: no-cors direct POST (request sent, response opaque)
-      fetch(SHEET_URL, {
-        method: "POST",
-        mode: "no-cors",
-        headers: {"Content-Type": "text/plain"},
-        body: payload
-      }).then(function() {
-        setSyncStatus("ok", "Guardado (local)");
-      }).catch(function() {
-        setSyncStatus("error", "Error al guardar");
-      });
+      setSyncStatus("error", "Error al guardar");
     });
   }, 800);
 }
@@ -549,4 +523,17 @@ function render() {
 }
 
 // ─── INIT ──────────────────────────────────────────────────────────────────────────────
-// Render m
+// Render matches immediately so page never appears blank
+renderLeaderboard();
+render();
+// Then load data from Sheet and refresh
+loadData();
+// Poll every 30 seconds for updates from other family members
+setInterval(loadData, 30000);
+// Also reload when tab becomes visible again
+document.addEventListener("visibilitychange", function(){
+  if (document.visibilityState === "visible") loadData();
+});
+</script>
+</body>
+</html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
