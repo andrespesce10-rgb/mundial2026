@@ -580,4 +580,98 @@ var FDAPI = "https://api.football-data.org/v4/competitions/WC/matches";
 var FDKEY = "a3406a3044594d8db5526eaa412bfb92";
 var lastApiFetch = 0;
 
-va
+var API_NAME_MAP = {
+  "Mexico":"Mexico","South Africa":"South Africa",
+  "Korea Republic":"South Korea","South Korea":"South Korea",
+  "Czechia":"Czechia *",
+  "Canada":"Canada","Qatar":"Qatar","Switzerland":"Switzerland",
+  "Brazil":"Brazil","Morocco":"Morocco","Haiti":"Haiti","Scotland":"Scotland",
+  "United States":"USA","USA":"USA","Paraguay":"Paraguay","Australia":"Australia",
+  "Germany":"Germany","Curaçao":"Curaçao","Curacao":"Curaçao",
+  "Ivory Coast":"Ivory Coast","Côte d'Ivoire":"Ivory Coast",
+  "Ecuador":"Ecuador","Netherlands":"Netherlands","Japan":"Japan",
+  "Tunisia":"Tunisia","Belgium":"Belgium","Egypt":"Egypt",
+  "Iran":"Iran","IR Iran":"Iran","New Zealand":"New Zealand",
+  "Spain":"Spain","Cape Verde":"Cape Verde","Cabo Verde":"Cape Verde",
+  "Saudi Arabia":"Saudi Arabia","Uruguay":"Uruguay","France":"France",
+  "Senegal":"Senegal","Norway":"Norway","Argentina":"Argentina",
+  "Algeria":"Algeria","Austria":"Austria","Jordan":"Jordan",
+  "Portugal":"Portugal","Uzbekistan":"Uzbekistan","Colombia":"Colombia",
+  "England":"England","Croatia":"Croatia","Ghana":"Ghana","Panama":"Panama"
+};
+
+// Build lookup: sorted(team1,team2)+"|"+date → matchId
+var MATCH_LOOKUP = {};
+MATCHES.forEach(function(m) {
+  var key = [m[3],m[4]].sort().join("|")+"|"+m[1];
+  MATCH_LOOKUP[key] = m[0];
+});
+
+function fetchApiResults() {
+  var now = Date.now();
+  if (now - lastApiFetch < 90000) return; // max once every 90s
+  lastApiFetch = now;
+
+  fetch(FDAPI, {headers:{"X-Auth-Token": FDKEY}})
+    .then(function(r){ return r.json(); })
+    .then(function(data) {
+      if (!data || !data.matches) return;
+      var changed = false;
+      data.matches.forEach(function(m) {
+        var st = m.status;
+        if (st !== "FINISHED" && st !== "IN_PLAY") return;
+        var h = m.score && m.score.fullTime && m.score.fullTime.home;
+        var a = m.score && m.score.fullTime && m.score.fullTime.away;
+        if (h === null || h === undefined || a === null || a === undefined) return;
+
+        var t1 = API_NAME_MAP[m.homeTeam && m.homeTeam.name];
+        var t2 = API_NAME_MAP[m.awayTeam && m.awayTeam.name];
+        if (!t1 || !t2) return;
+
+        // Convert utcDate to Chile local date
+        var utc = new Date(m.utcDate);
+        var clDate;
+        try { clDate = new Intl.DateTimeFormat("sv",{timeZone:"America/Santiago"}).format(utc).split(" ")[0]; }
+        catch(e) { clDate = new Date(utc.getTime()-4*3600000).toISOString().split("T")[0]; }
+
+        var key = [t1,t2].sort().join("|")+"|"+clDate;
+        var mid = MATCH_LOOKUP[key];
+        if (!mid) return;
+
+        var midStr = String(mid);
+        var cur = actuals[midStr]||[null,null];
+        if (cur[0] !== h || cur[1] !== a) {
+          actuals[midStr] = [h, a];
+          changed = true;
+        }
+      });
+
+      if (changed) {
+        saveActuals();
+        renderLeaderboard();
+        render();
+        MATCHES.forEach(function(m){ refreshPts(m[0]); });
+        var now2 = new Date().toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"});
+        setSyncStatus("ok","⚽ Resultados actualizados "+now2);
+      }
+    })
+    .catch(function(e){ console.log("FD API:", e); });
+}
+
+// INIT
+if (myName) {
+  var nb = document.getElementById("nb-"+myName);
+  if (nb) nb.classList.add("active");
+}
+renderLeaderboard();
+render();
+loadData();
+fetchApiResults();
+setInterval(loadData, 30000);
+setInterval(fetchApiResults, 120000); // fetch API every 2 min
+document.addEventListener("visibilitychange", function(){
+  if (document.visibilityState==="visible") { loadData(); fetchApiResults(); }
+});
+</script>
+</body>
+</html>
