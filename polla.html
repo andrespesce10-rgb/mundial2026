@@ -267,8 +267,9 @@ const MEDALS  = ["🥇","🥈","🥉","4️⃣","5️⃣"];
 var SHEET_URL = "https://script.google.com/macros/s/AKfycbwSYnHcns5x2ZXt_TAvHKkJz10llKzq38vjDvaWlUoalzxn3a5kz_vcULisbZGjX42U/exec";
 
 // ─── STATE ───────────────────────────────────────────────────────────────────
-var predictions = {};  // {matchId: {Vale:[s1,s2], ...}}
-var actuals = {};      // {matchId: [s1,s2]}
+// Initialize from localStorage immediately so data survives page reloads
+var predictions = (function(){ try { return JSON.parse(localStorage.getItem("polla26_preds")||"{}"); } catch(e){ return {}; } })();
+var actuals     = (function(){ try { return JSON.parse(localStorage.getItem("polla26_actuals")||"{}"); } catch(e){ return {}; } })();
 var activePhase = "all";
 var saveTimer = null;
 
@@ -548,11 +549,4 @@ function render() {
 }
 
 // ─── INIT ──────────────────────────────────────────────────────────────────────────────
-// Render matches immediately so page never appears blank
-renderLeaderboard();
-render();
-// Then load data from Sheet and refresh
-loadData();
-// Poll every 30 seconds for updates from other family members
-setInterval(loadData, 30000);
-// Also reload
+// Render m
