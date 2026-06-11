@@ -280,63 +280,58 @@ function setSyncStatus(state, msg) {
   txt.textContent = msg;
 }
 
+function fetchWithProxy(url, onSuccess, onFail) {
+  // Try corsproxy.io first, then allorigins as fallback
+  fetch("https://corsproxy.io/?" + encodeURIComponent(url))
+    .then(function(r){ return r.json(); })
+    .then(onSuccess)
+    .catch(function() {
+      fetch("https://api.allorigins.win/raw?url=" + encodeURIComponent(url))
+        .then(function(r){ return r.json(); })
+        .then(onSuccess)
+        .catch(onFail);
+    });
+}
+
 function loadData() {
   setSyncStatus("syncing", "Cargando…");
-  // Use JSONP to bypass CORS
-  var cbName = "__polla_cb_" + Date.now();
-  var script = document.createElement("script");
-  var timeout = setTimeout(function() {
-    script.remove();
-    delete window[cbName];
-    setSyncStatus("error", "Sin conexión");
-  }, 8000);
-  window[cbName] = function(data) {
-    clearTimeout(timeout);
-    script.remove();
-    delete window[cbName];
-    predictions = (data && data.predictions) || {};
-    actuals     = (data && data.actuals)     || {};
-    renderLeaderboard();
-    render();
-    var now = new Date().toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"});
-    setSyncStatus("ok", "Sincronizado " + now);
-  };
-  script.src = SHEET_URL + "?callback=" + cbName + "&_=" + Date.now();
-  script.onerror = function() {
-    clearTimeout(timeout);
-    script.remove();
-    delete window[cbName];
-    setSyncStatus("error", "Sin conexión");
-  };
-  document.head.appendChild(script);
+  fetchWithProxy(
+    SHEET_URL,
+    function(data) {
+      predictions = (data && data.predictions) || {};
+      actuals     = (data && data.actuals)     || {};
+      renderLeaderboard();
+      render();
+      var now = new Date().toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"});
+      setSyncStatus("ok", "Sincronizado " + now);
+    },
+    function() {
+      setSyncStatus("error", "Sin conexión");
+    }
+  );
 }
 
 function saveData() {
-  // Save locally immediately as backup
   try {
     localStorage.setItem("polla26_preds",   JSON.stringify(predictions));
     localStorage.setItem("polla26_actuals", JSON.stringify(actuals));
   } catch(e) {}
-  // Debounce remote save — wait 800ms after last change
   clearTimeout(saveTimer);
   saveTimer = setTimeout(function() {
     setSyncStatus("syncing", "Guardando…");
     var payload = JSON.stringify({predictions: predictions, actuals: actuals});
+    // no-cors: request IS sent, response is opaque (that's ok)
     fetch(SHEET_URL, {
       method: "POST",
+      mode: "no-cors",
       headers: {"Content-Type": "text/plain"},
       body: payload
-    }).then(function(r){ return r.json(); })
-    .then(function() {
+    }).then(function() {
       var now = new Date().toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"});
       setSyncStatus("ok", "Guardado " + now);
+      setTimeout(loadData, 2000);
     }).catch(function() {
-      // Fallback: save via GET with encoded data
-      fetch(SHEET_URL + "?data=" + encodeURIComponent(payload))
-        .then(function(){
-          var now = new Date().toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"});
-          setSyncStatus("ok", "Guardado " + now);
-        }).catch(function(){ setSyncStatus("error", "Error al guardar"); });
+      setSyncStatus("error", "Error al guardar");
     });
   }, 800);
 }
@@ -552,4 +547,4 @@ document.addEventListener("visibilitychange", function(){
 });
 </script>
 </body>
-</html>
+</html>                                                                                                                                                                                                                                                                                                                                                                                                         
