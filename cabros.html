@@ -588,15 +588,14 @@ function render() {
   MATCHES.forEach(function(m){ refreshPts(m[0]); });
 }
 
-// ─── FOOTBALL API AUTO-RESULTS ────────────────────────────────────────────────
-var FDAPI = "https://api.football-data.org/v4/competitions/WC/matches";
-var FDKEY = "a3406a3044594d8db5526eaa412bfb92";
+// ─── ESPN AUTO-RESULTS ────────────────────────────────────────────────────────
+var ESPN_BASE = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard";
 var lastApiFetch = 0;
 
-var API_NAME_MAP = {
+var ESPN_NAME_MAP = {
   "Mexico":"Mexico","South Africa":"South Africa",
-  "Korea Republic":"South Korea","South Korea":"South Korea",
-  "Czechia":"Czechia",
+  "South Korea":"South Korea","Korea Republic":"South Korea",
+  "Czechia":"Czechia","Czech Republic":"Czechia",
   "Canada":"Canada","Qatar":"Qatar","Switzerland":"Switzerland",
   "Brazil":"Brazil","Morocco":"Morocco","Haiti":"Haiti","Scotland":"Scotland",
   "United States":"USA","USA":"USA","Paraguay":"Paraguay","Australia":"Australia",
@@ -611,72 +610,82 @@ var API_NAME_MAP = {
   "Algeria":"Algeria","Austria":"Austria","Jordan":"Jordan",
   "Portugal":"Portugal","Uzbekistan":"Uzbekistan","Colombia":"Colombia",
   "England":"England","Croatia":"Croatia","Ghana":"Ghana","Panama":"Panama",
-  "Bosnia and Herzegovina":"Bosnia-Herzegovina",
-  "Bosnia-Herzegovina":"Bosnia-Herzegovina",
-  "Sweden":"Sweden",
-  "Türkiye":"Türkiye",
-  "Turkey":"Türkiye",
-  "DR Congo":"DR Congo",
-  "Congo DR":"DR Congo",
+  "Bosnia-Herzegovina":"Bosnia-Herzegovina","Bosnia and Herzegovina":"Bosnia-Herzegovina",
+  "Sweden":"Sweden","Türkiye":"Türkiye","Turkey":"Türkiye",
+  "DR Congo":"DR Congo","Congo DR":"DR Congo","Democratic Republic of Congo":"DR Congo",
   "Iraq":"Iraq"
 };
 
-// Build lookup: sorted(team1,team2)+"|"+date → matchId
 var MATCH_LOOKUP = {};
 MATCHES.forEach(function(m) {
   var key = [m[3],m[4]].sort().join("|")+"|"+m[1];
   MATCH_LOOKUP[key] = m[0];
 });
 
+function getChileDate(date) {
+  try { return new Intl.DateTimeFormat("sv",{timeZone:"America/Santiago"}).format(date).split(" ")[0]; }
+  catch(e) { return new Date(date.getTime()-4*3600000).toISOString().split("T")[0]; }
+}
+
 function fetchApiResults() {
   var now = Date.now();
-  if (now - lastApiFetch < 90000) return; // max once every 90s
+  if (now - lastApiFetch < 90000) return;
   lastApiFetch = now;
 
-  fetch(FDAPI, {headers:{"X-Auth-Token": FDKEY}})
-    .then(function(r){ return r.json(); })
-    .then(function(data) {
-      if (!data || !data.matches) return;
-      var changed = false;
-      data.matches.forEach(function(m) {
-        var st = m.status;
-        if (st !== "FINISHED" && st !== "IN_PLAY") return;
-        var h = m.score && m.score.fullTime && m.score.fullTime.home;
-        var a = m.score && m.score.fullTime && m.score.fullTime.away;
-        if (h === null || h === undefined || a === null || a === undefined) return;
+  var today = getChileDate(new Date());
 
-        var t1 = API_NAME_MAP[m.homeTeam && m.homeTeam.name];
-        var t2 = API_NAME_MAP[m.awayTeam && m.awayTeam.name];
-        if (!t1 || !t2) return;
+  var datesToFetch = {};
+  MATCHES.forEach(function(m) {
+    if (m[1] > today) return;
+    var act = actuals[String(m[0])];
+    if (act && act[0] !== null && act[1] !== null) return;
+    datesToFetch[m[1]] = true;
+  });
 
-        // Convert utcDate to Chile local date
-        var utc = new Date(m.utcDate);
-        var clDate;
-        try { clDate = new Intl.DateTimeFormat("sv",{timeZone:"America/Santiago"}).format(utc).split(" ")[0]; }
-        catch(e) { clDate = new Date(utc.getTime()-4*3600000).toISOString().split("T")[0]; }
+  var dateList = Object.keys(datesToFetch).sort().slice(0, 6);
+  if (dateList.length === 0) return;
 
+  Promise.all(dateList.map(function(d) {
+    return fetch(ESPN_BASE + "?dates=" + d.replace(/-/g,""))
+      .then(function(r){ return r.json(); })
+      .catch(function(){ return {events:[]}; });
+  }))
+  .then(function(results) {
+    var changed = false;
+    results.forEach(function(data) {
+      if (!data.events) return;
+      data.events.forEach(function(evt) {
+        var statusType = evt.status && evt.status.type;
+        if (!statusType || statusType.name === "STATUS_SCHEDULED") return;
+        if (!statusType.completed && statusType.name !== "STATUS_IN_PROGRESS") return;
+
+        var comp = evt.competitions[0];
+        var home = comp.competitors.find(function(c){ return c.homeAway==="home"; });
+        var away = comp.competitors.find(function(c){ return c.homeAway==="away"; });
+        if (!home||!away||home.score===""||away.score==="") return;
+        var h = parseInt(home.score), a = parseInt(away.score);
+        if (isNaN(h)||isNaN(a)) return;
+
+        var t1 = ESPN_NAME_MAP[home.team.displayName]||home.team.displayName;
+        var t2 = ESPN_NAME_MAP[away.team.displayName]||away.team.displayName;
+        var clDate = getChileDate(new Date(evt.date));
         var key = [t1,t2].sort().join("|")+"|"+clDate;
         var mid = MATCH_LOOKUP[key];
         if (!mid) return;
 
         var midStr = String(mid);
         var cur = actuals[midStr]||[null,null];
-        if (cur[0] !== h || cur[1] !== a) {
-          actuals[midStr] = [h, a];
-          changed = true;
-        }
+        if (cur[0]!==h||cur[1]!==a) { actuals[midStr]=[h,a]; changed=true; }
       });
-
-      if (changed) {
-        saveActuals();
-        renderLeaderboard();
-        render();
-        MATCHES.forEach(function(m){ refreshPts(m[0]); });
-        var now2 = new Date().toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"});
-        setSyncStatus("ok","⚽ Resultados actualizados "+now2);
-      }
-    })
-    .catch(function(e){ console.log("FD API:", e); });
+    });
+    if (changed) {
+      saveActuals(); renderLeaderboard(); render();
+      MATCHES.forEach(function(m){ refreshPts(m[0]); });
+      var t = new Date().toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"});
+      setSyncStatus("ok","⚽ Resultados actualizados "+t);
+    }
+  })
+  .catch(function(e){ console.log("ESPN API:", e); });
 }
 
 // INIT
