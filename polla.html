@@ -643,8 +643,10 @@ function fetchApiResults() {
       if (!data.events) return;
       data.events.forEach(function(evt) {
         var statusType = evt.status && evt.status.type;
-        if (!statusType || statusType.name === "STATUS_SCHEDULED") return;
-        if (!statusType.completed && statusType.name !== "STATUS_IN_PROGRESS") return;
+        if (!statusType) return;
+        var state = statusType.state || "";
+        // state: "pre"=not started, "in"=live, "post"=finished
+        if (state !== "post" && state !== "in") return;
 
         var comp = evt.competitions[0];
         var home = comp.competitors.find(function(c){ return c.homeAway==="home"; });
