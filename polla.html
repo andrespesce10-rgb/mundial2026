@@ -644,9 +644,15 @@ function fetchApiResults() {
       data.events.forEach(function(evt) {
         var statusType = evt.status && evt.status.type;
         if (!statusType) return;
+        var desc = statusType.description || "";
         var state = statusType.state || "";
-        // state: "pre"=not started, "in"=live, "post"=finished
-        if (state !== "post" && state !== "in") return;
+        var typeId = parseInt(statusType.id || "0");
+        // Skip only if clearly not started
+        var notStarted = desc === "Scheduled" || desc === "TBD" || desc === "Postponed" ||
+                         state === "pre" || typeId === 1;
+        if (notStarted) return;
+        // Must have actual scores
+        if (home.score === "" || home.score === null || away.score === "" || away.score === null) return;
 
         var comp = evt.competitions[0];
         var home = comp.competitors.find(function(c){ return c.homeAway==="home"; });
