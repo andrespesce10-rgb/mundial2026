@@ -616,7 +616,7 @@ function getChileDate(date) {
 
 function fetchApiResults() {
   var now = Date.now();
-  if (now - lastApiFetch < 90000) return;
+  if (now - lastApiFetch < 60000) return;
   lastApiFetch = now;
 
   var today = getChileDate(new Date());
@@ -629,7 +629,7 @@ function fetchApiResults() {
     datesToFetch[m[1]] = true;
   });
 
-  var dateList = Object.keys(datesToFetch).sort().slice(0, 6);
+  var dateList = Object.keys(datesToFetch).sort();
   if (dateList.length === 0) return;
 
   Promise.all(dateList.map(function(d) {
