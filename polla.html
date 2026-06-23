@@ -651,13 +651,13 @@ function fetchApiResults() {
         var notStarted = desc === "Scheduled" || desc === "TBD" || desc === "Postponed" ||
                          state === "pre" || typeId === 1;
         if (notStarted) return;
-        // Must have actual scores
-        if (home.score === "" || home.score === null || away.score === "" || away.score === null) return;
 
         var comp = evt.competitions[0];
+        if (!comp) return;
         var home = comp.competitors.find(function(c){ return c.homeAway==="home"; });
         var away = comp.competitors.find(function(c){ return c.homeAway==="away"; });
-        if (!home||!away||home.score===""||away.score==="") return;
+        if (!home||!away) return;
+        if (home.score===""||home.score===null||away.score===""||away.score===null) return;
         var h = parseInt(home.score), a = parseInt(away.score);
         if (isNaN(h)||isNaN(a)) return;
 
