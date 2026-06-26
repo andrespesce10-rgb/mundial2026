@@ -106,6 +106,22 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 
 /* EMPTY */
 .empty { text-align: center; padding: 40px 20px; color: #a0aec0; font-size: 14px; }
+
+/* TODAY'S MATCHES */
+.today-section { background: white; border-bottom: 2px solid #e2e8f0; padding: 10px 14px 10px; }
+.today-title { font-size: 11px; font-weight: 700; color: #718096; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px; }
+.today-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+.today-scroll::-webkit-scrollbar { height: 0; }
+.today-match { flex-shrink: 0; background: #f7fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 7px 10px; min-width: 130px; max-width: 160px; text-align: center; }
+.today-match.tm-live { border-color: #feb2b2; background: #fff5f5; }
+.today-match.tm-final { border-color: #68d391; background: #f0fff4; }
+.today-group { font-size: 9px; font-weight: 700; color: #a0aec0; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
+.today-teams { font-size: 12px; font-weight: 700; color: #2d3748; line-height: 1.3; }
+.today-score { font-size: 18px; font-weight: 900; color: #1a3a5c; margin: 2px 0; letter-spacing: 1px; }
+.today-time { font-size: 11px; color: #718096; font-weight: 600; }
+.today-status { font-size: 10px; font-weight: 700; }
+.tm-live .today-status { color: #e53e3e; }
+.tm-final .today-status { color: #38a169; }
 </style>
 </head>
 <body>
@@ -141,6 +157,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
   <button class="name-btn" id="nb-Yeomans" onclick="setMyName('Yeomans')">Yeomans</button>
   <button class="name-btn" id="nb-Vidal" onclick="setMyName('Vidal')">Vidal</button>
   <button class="name-btn" id="nb-Schmidt" onclick="setMyName('Schmidt')">Schmidt</button>
+</div>
+
+<div class="today-section" id="today-section" style="display:none">
+  <div class="today-title">⚽ Partidos de hoy</div>
+  <div class="today-scroll" id="today-cards"></div>
 </div>
 
 <div class="lb-section">
@@ -306,6 +327,36 @@ var activePhase = "all";
 var saveTimer   = null;
 
 // ─── SYNC STATUS ──────────────────────────────────────────────────────────────
+
+function renderTodayMatches() {
+  var today = getChileDate(new Date());
+  var todayMatches = MATCHES.filter(function(m){ return m[1]===today; });
+  var section = document.getElementById("today-section");
+  var container = document.getElementById("today-cards");
+  if (!todayMatches.length) { section.style.display="none"; return; }
+  section.style.display="";
+  container.innerHTML = todayMatches.map(function(m) {
+    var act = actuals[String(m[0])];
+    var hasResult = act && act[0]!==null && act[1]!==null;
+    var timeParts = m[2].split(":");
+    var matchDate = new Date(m[1]+"T"+m[2]+":00");
+    var nowCL = new Date(new Date().toLocaleString("en-US",{timeZone:"America/Santiago"}));
+    var isLive = !hasResult && nowCL > matchDate && nowCL < new Date(matchDate.getTime()+110*60000);
+    var cls = hasResult ? "tm-final" : isLive ? "tm-live" : "";
+    var scoreHtml = hasResult
+      ? '<div class="today-score">'+act[0]+'&ndash;'+act[1]+'</div><div class="today-status">Final</div>'
+      : isLive
+        ? '<div class="today-score">&#8226;&#8226;&#8226;</div><div class="today-status">🔴 En vivo</div>'
+        : '<div class="today-time">'+m[2]+' CL</div>';
+    return '<div class="today-match '+cls+'">'
+      +'<div class="today-group">Grupo '+m[5]+'</div>'
+      +'<div class="today-teams">'+flag(m[3])+' '+m[3].split(" ").slice(-1)[0]+'<br>'
+      +flag(m[4])+' '+m[4].split(" ").slice(-1)[0]+'</div>'
+      +scoreHtml
+      +'</div>';
+  }).join("");
+}
+
 function setSyncStatus(state, msg) {
   var dot = document.getElementById("sync-dot");
   var txt = document.getElementById("sync-txt");
@@ -479,6 +530,7 @@ function refreshPts(matchId) {
 
 // ─── LEADERBOARD ──────────────────────────────────────────────────────────────
 function renderLeaderboard() {
+  renderTodayMatches();
   var standings = PERSONS.map(function(p){ return {name:p,pts:totalPts(p)}; })
     .sort(function(a,b){ return b.pts-a.pts; });
   var rankClass = ["rank-1","rank-2","rank-3","","","","","","","","","","","","","",""];
@@ -687,7 +739,7 @@ function fetchApiResults() {
       });
     });
     if (changed) {
-      saveActuals(); renderLeaderboard(); render();
+      saveActuals(); renderLeaderboard(); render(); renderTodayMatches();
       MATCHES.forEach(function(m){ refreshPts(m[0]); });
       var t = new Date().toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"});
       setSyncStatus("ok","⚽ Resultados actualizados "+t);
@@ -703,6 +755,7 @@ if (myName) {
 }
 renderLeaderboard();
 render();
+renderTodayMatches();
 loadData();
 fetchApiResults();
 setInterval(loadData, 30000);
