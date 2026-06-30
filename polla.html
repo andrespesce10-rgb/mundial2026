@@ -2,8 +2,11 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ð Mundial Pesciolini 2026</title>
+<title>Ã°ÂÂÂ Mundial Pesciolini 2026</title>
 <style>
 :root { color-scheme: light; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -129,11 +132,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 <div class="header">
   <div class="header-row">
     <div>
-      <div class="header-title">ð Mundial Pesciolini 2026</div>
-      <div class="header-sub">Vale Â· Mati Â· Tomi Â· MamÃ¡ Â· PapÃ¡ &nbsp;|&nbsp; ð¨ð± Hora Chile</div>
-      <div class="sync-bar"><span class="sync-dot" id="sync-dot"></span><span id="sync-txt">Conectandoâ¦</span></div>
+      <div class="header-title">Ã°ÂÂÂ Mundial Pesciolini 2026</div>
+      <div class="header-sub">Vale ÃÂ· Mati ÃÂ· Tomi ÃÂ· MamÃÂ¡ ÃÂ· PapÃÂ¡ &nbsp;|&nbsp; Ã°ÂÂÂ¨Ã°ÂÂÂ± Hora Chile</div>
+      <div class="sync-bar"><span class="sync-dot" id="sync-dot"></span><span id="sync-txt">ConectandoÃ¢ÂÂ¦</span></div>
     </div>
-    <a class="header-link" href="index.html">â½ Calendario</a>
+    <a class="header-link" href="index.html">Ã¢ÂÂ½ Calendario</a>
   </div>
 </div>
 
@@ -142,19 +145,19 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
   <button class="name-btn" id="nb-Vale"  onclick="setMyName('Vale')">Vale</button>
   <button class="name-btn" id="nb-Mati"  onclick="setMyName('Mati')">Mati</button>
   <button class="name-btn" id="nb-Tomi"  onclick="setMyName('Tomi')">Tomi</button>
-  <button class="name-btn" id="nb-MamÃ¡"  onclick="setMyName('MamÃ¡')">MamÃ¡</button>
-  <button class="name-btn" id="nb-PapÃ¡"  onclick="setMyName('PapÃ¡')">PapÃ¡</button>
+  <button class="name-btn" id="nb-MamÃÂ¡"  onclick="setMyName('MamÃÂ¡')">MamÃÂ¡</button>
+  <button class="name-btn" id="nb-PapÃÂ¡"  onclick="setMyName('PapÃÂ¡')">PapÃÂ¡</button>
 </div>
 
 <div class="today-section" id="today-section" style="display:none">
-  <div class="today-title">â½ Partidos de hoy</div>
+  <div class="today-title">Ã¢ÂÂ½ Partidos de hoy</div>
   <div class="today-scroll" id="today-cards"></div>
 </div>
 
 <div class="lb-section">
-  <div class="lb-title">ð Tabla de posiciones</div>
+  <div class="lb-title">Ã°ÂÂÂ Tabla de posiciones</div>
   <div class="lb-cards" id="lb-cards"></div>
-  <div class="lb-legend">ð¯ Score exacto = 6pts &nbsp;Â·&nbsp; â Diferencia exacta = 4pts &nbsp;Â·&nbsp; â Resultado correcto = 2pts</div>
+  <div class="lb-legend">Ã°ÂÂÂ¯ Score exacto = 6pts &nbsp;ÃÂ·&nbsp; Ã¢ÂÂ Diferencia exacta = 4pts &nbsp;ÃÂ·&nbsp; Ã¢ÂÂ Resultado correcto = 2pts</div>
 </div>
 
 <div class="phase-bar">
@@ -170,17 +173,17 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
 <div class="content" id="content"></div>
 
 <script>
-// âââ MATCH DATA âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ MATCH DATA Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 const MATCHES = [
-  [1,"2026-06-11","15:00","Mexico","South Africa","A","group","Ciudad de MÃ©xico"],
+  [1,"2026-06-11","15:00","Mexico","South Africa","A","group","Ciudad de MÃÂ©xico"],
   [2,"2026-06-11","22:00","South Korea","Czechia","A","group","Guadalajara"],
   [3,"2026-06-18","12:00","Czechia","South Africa","A","group","Atlanta"],
   [4,"2026-06-18","21:00","Mexico","South Korea","A","group","Guadalajara"],
-  [5,"2026-06-24","21:00","Czechia","Mexico","A","group","Ciudad de MÃ©xico"],
+  [5,"2026-06-24","21:00","Czechia","Mexico","A","group","Ciudad de MÃÂ©xico"],
   [6,"2026-06-24","21:00","South Africa","South Korea","A","group","Monterrey"],
   [7,"2026-06-12","15:00","Canada","Bosnia-Herzegovina","B","group","Toronto"],
   [8,"2026-06-13","15:00","Qatar","Switzerland","B","group","San Francisco"],
-  [9,"2026-06-18","15:00","Switzerland","Bosnia-Herzegovina","B","group","Los Ãngeles"],
+  [9,"2026-06-18","15:00","Switzerland","Bosnia-Herzegovina","B","group","Los ÃÂngeles"],
   [10,"2026-06-18","18:00","Canada","Qatar","B","group","Vancouver"],
   [11,"2026-06-24","15:00","Switzerland","Canada","B","group","Vancouver"],
   [12,"2026-06-24","15:00","Bosnia-Herzegovina","Qatar","B","group","Seattle"],
@@ -190,17 +193,17 @@ const MATCHES = [
   [16,"2026-06-19","21:00","Brazil","Haiti","C","group","Filadelfia"],
   [17,"2026-06-24","18:00","Scotland","Brazil","C","group","Miami"],
   [18,"2026-06-24","18:00","Morocco","Haiti","C","group","Atlanta"],
-  [19,"2026-06-12","21:00","USA","Paraguay","D","group","Los Ãngeles"],
-  [20,"2026-06-14","00:00","Australia","TÃ¼rkiye","D","group","Vancouver"],
+  [19,"2026-06-12","21:00","USA","Paraguay","D","group","Los ÃÂngeles"],
+  [20,"2026-06-14","00:00","Australia","TÃÂ¼rkiye","D","group","Vancouver"],
   [21,"2026-06-19","15:00","USA","Australia","D","group","Seattle"],
-  [22,"2026-06-20","00:00","TÃ¼rkiye","Paraguay","D","group","San Francisco"],
-  [23,"2026-06-25","22:00","TÃ¼rkiye","USA","D","group","Los Ãngeles"],
+  [22,"2026-06-20","00:00","TÃÂ¼rkiye","Paraguay","D","group","San Francisco"],
+  [23,"2026-06-25","22:00","TÃÂ¼rkiye","USA","D","group","Los ÃÂngeles"],
   [24,"2026-06-25","22:00","Paraguay","Australia","D","group","San Francisco"],
-  [25,"2026-06-14","13:00","Germany","CuraÃ§ao","E","group","Houston"],
+  [25,"2026-06-14","13:00","Germany","CuraÃÂ§ao","E","group","Houston"],
   [26,"2026-06-14","19:00","Ivory Coast","Ecuador","E","group","Filadelfia"],
   [27,"2026-06-20","16:00","Germany","Ivory Coast","E","group","Toronto"],
-  [28,"2026-06-20","20:00","Ecuador","CuraÃ§ao","E","group","Kansas City"],
-  [29,"2026-06-25","16:00","CuraÃ§ao","Ivory Coast","E","group","Filadelfia"],
+  [28,"2026-06-20","20:00","Ecuador","CuraÃÂ§ao","E","group","Kansas City"],
+  [29,"2026-06-25","16:00","CuraÃÂ§ao","Ivory Coast","E","group","Filadelfia"],
   [30,"2026-06-25","16:00","Ecuador","Germany","E","group","Nueva York"],
   [31,"2026-06-14","16:00","Netherlands","Japan","F","group","Dallas"],
   [32,"2026-06-14","22:00","Sweden","Tunisia","F","group","Monterrey"],
@@ -209,8 +212,8 @@ const MATCHES = [
   [35,"2026-06-25","19:00","Japan","Sweden","F","group","Dallas"],
   [36,"2026-06-25","19:00","Tunisia","Netherlands","F","group","Kansas City"],
   [37,"2026-06-15","15:00","Belgium","Egypt","G","group","Seattle"],
-  [38,"2026-06-15","21:00","Iran","New Zealand","G","group","Los Ãngeles"],
-  [39,"2026-06-21","15:00","Belgium","Iran","G","group","Los Ãngeles"],
+  [38,"2026-06-15","21:00","Iran","New Zealand","G","group","Los ÃÂngeles"],
+  [39,"2026-06-21","15:00","Belgium","Iran","G","group","Los ÃÂngeles"],
   [40,"2026-06-21","21:00","New Zealand","Egypt","G","group","Vancouver"],
   [41,"2026-06-26","23:00","Egypt","Iran","G","group","Seattle"],
   [42,"2026-06-26","23:00","New Zealand","Belgium","G","group","Vancouver"],
@@ -233,7 +236,7 @@ const MATCHES = [
   [59,"2026-06-27","22:00","Algeria","Austria","J","group","Kansas City"],
   [60,"2026-06-27","22:00","Jordan","Argentina","J","group","Dallas"],
   [61,"2026-06-17","13:00","Portugal","DR Congo","K","group","Houston"],
-  [62,"2026-06-17","22:00","Uzbekistan","Colombia","K","group","Ciudad de MÃ©xico"],
+  [62,"2026-06-17","22:00","Uzbekistan","Colombia","K","group","Ciudad de MÃÂ©xico"],
   [63,"2026-06-23","13:00","Portugal","Uzbekistan","K","group","Houston"],
   [64,"2026-06-23","22:00","Colombia","DR Congo","K","group","Guadalajara"],
   [65,"2026-06-27","19:30","Colombia","Portugal","K","group","Miami"],
@@ -244,18 +247,18 @@ const MATCHES = [
   [70,"2026-06-23","19:00","Panama","Croatia","L","group","Toronto"],
   [71,"2026-06-27","17:00","Panama","England","L","group","Nueva York"],
   [72,"2026-06-27","17:00","Croatia","Ghana","L","group","Filadelfia"],
-  [73,"2026-06-28","15:00","South Africa","Canada",null,"r32","Los Ãngeles"],
+  [73,"2026-06-28","15:00","South Africa","Canada",null,"r32","Los ÃÂngeles"],
   [74,"2026-06-29","16:30","Germany","Paraguay",null,"r32","Boston"],
   [75,"2026-06-29","21:00","Netherlands","Morocco",null,"r32","Monterrey"],
   [76,"2026-06-29","13:00","Brazil","Japan",null,"r32","Houston"],
   [77,"2026-06-30","17:00","France","Sweden",null,"r32","Nueva York"],
   [78,"2026-06-30","13:00","Ivory Coast","Norway",null,"r32","Dallas"],
-  [79,"2026-06-30","21:00","Mexico","Ecuador",null,"r32","Ciudad de MÃ©xico"],
+  [79,"2026-06-30","21:00","Mexico","Ecuador",null,"r32","Ciudad de MÃÂ©xico"],
   [80,"2026-07-01","12:00","England","DR Congo",null,"r32","Atlanta"],
   [81,"2026-07-01","20:00","USA","Bosnia-Herzegovina",null,"r32","San Francisco"],
   [82,"2026-07-01","16:00","Belgium","Senegal",null,"r32","Seattle"],
   [83,"2026-07-02","19:00","Portugal","Ghana",null,"r32","Toronto"],
-  [84,"2026-07-02","15:00","Spain","Austria",null,"r32","Los Ãngeles"],
+  [84,"2026-07-02","15:00","Spain","Austria",null,"r32","Los ÃÂngeles"],
   [85,"2026-07-02","23:00","Switzerland","Egypt",null,"r32","Vancouver"],
   [86,"2026-07-03","18:00","Argentina","Cape Verde",null,"r32","Miami"],
   [87,"2026-07-03","21:30","Colombia","Croatia",null,"r32","Kansas City"],
@@ -263,49 +266,49 @@ const MATCHES = [
   [89,"2026-07-04","17:00","W74","W77",null,"r16","Filadelfia"],
   [90,"2026-07-04","13:00","W73","W75",null,"r16","Houston"],
   [91,"2026-07-05","16:00","W76","W78",null,"r16","Nueva York"],
-  [92,"2026-07-05","20:00","W79","W80",null,"r16","Ciudad de MÃ©xico"],
+  [92,"2026-07-05","20:00","W79","W80",null,"r16","Ciudad de MÃÂ©xico"],
   [93,"2026-07-06","15:00","W83","W84",null,"r16","Dallas"],
   [94,"2026-07-06","20:00","W81","W82",null,"r16","Seattle"],
   [95,"2026-07-07","12:00","W86","W88",null,"r16","Atlanta"],
   [96,"2026-07-07","16:00","W85","W87",null,"r16","Vancouver"],
   [97,"2026-07-09","16:00","W89","W90",null,"qf","Boston"],
-  [98,"2026-07-10","15:00","W93","W94",null,"qf","Los Ãngeles"],
+  [98,"2026-07-10","15:00","W93","W94",null,"qf","Los ÃÂngeles"],
   [99,"2026-07-11","17:00","W91","W92",null,"qf","Miami"],
   [100,"2026-07-11","21:00","W95","W96",null,"qf","Kansas City"],
   [101,"2026-07-14","15:00","W97","W98",null,"sf","Dallas"],
   [102,"2026-07-15","15:00","W99","W100",null,"sf","Atlanta"],
   [103,"2026-07-18","17:00","L101","L102",null,"3rd","Miami"],
-  [104,"2026-07-19","15:00","W101","W102",null,"final","Nueva York ð"],
+  [104,"2026-07-19","15:00","W101","W102",null,"final","Nueva York Ã°ÂÂÂ"],
 ];
 
 const FLAGS = {
-  "Mexico":"ð²ð½","South Africa":"ð¿ð¦","South Korea":"ð°ð·","Czechia":"ð¨ð¿",
-  "Canada":"ð¨ð¦","Qatar":"ð¶ð¦","Switzerland":"ð¨ð­","Brazil":"ð§ð·","Morocco":"ð²ð¦",
-  "Haiti":"ð­ð¹","Scotland":"ð´ó §ó ¢ó ³ó £ó ´ó ¿","USA":"ðºð¸","Paraguay":"ðµð¾","Australia":"ð¦ðº",
-  "Germany":"ð©ðª","CuraÃ§ao":"ð¨ð¼","Ivory Coast":"ð¨ð®","Ecuador":"ðªð¨",
-  "Netherlands":"ð³ð±","Japan":"ð¯ðµ","Tunisia":"ð¹ð³","Belgium":"ð§ðª","Egypt":"ðªð¬",
-  "Iran":"ð®ð·","New Zealand":"ð³ð¿","Spain":"ðªð¸","Cape Verde":"ð¨ð»",
-  "Saudi Arabia":"ð¸ð¦","Uruguay":"ðºð¾","France":"ð«ð·","Senegal":"ð¸ð³","Norway":"ð³ð´",
-  "Argentina":"ð¦ð·","Algeria":"ð©ð¿","Austria":"ð¦ð¹","Jordan":"ð¯ð´",
-  "Portugal":"ðµð¹","Uzbekistan":"ðºð¿","Colombia":"ð¨ð´","England":"ð´ó §ó ¢ó ¥ó ®ó §ó ¿",
-  "Croatia":"ð­ð·","Ghana":"ð¬ð­","Panama":"ðµð¦",
+  "Mexico":"Ã°ÂÂÂ²Ã°ÂÂÂ½","South Africa":"Ã°ÂÂÂ¿Ã°ÂÂÂ¦","South Korea":"Ã°ÂÂÂ°Ã°ÂÂÂ·","Czechia":"Ã°ÂÂÂ¨Ã°ÂÂÂ¿",
+  "Canada":"Ã°ÂÂÂ¨Ã°ÂÂÂ¦","Qatar":"Ã°ÂÂÂ¶Ã°ÂÂÂ¦","Switzerland":"Ã°ÂÂÂ¨Ã°ÂÂÂ­","Brazil":"Ã°ÂÂÂ§Ã°ÂÂÂ·","Morocco":"Ã°ÂÂÂ²Ã°ÂÂÂ¦",
+  "Haiti":"Ã°ÂÂÂ­Ã°ÂÂÂ¹","Scotland":"Ã°ÂÂÂ´Ã³Â ÂÂ§Ã³Â ÂÂ¢Ã³Â ÂÂ³Ã³Â ÂÂ£Ã³Â ÂÂ´Ã³Â ÂÂ¿","USA":"Ã°ÂÂÂºÃ°ÂÂÂ¸","Paraguay":"Ã°ÂÂÂµÃ°ÂÂÂ¾","Australia":"Ã°ÂÂÂ¦Ã°ÂÂÂº",
+  "Germany":"Ã°ÂÂÂ©Ã°ÂÂÂª","CuraÃÂ§ao":"Ã°ÂÂÂ¨Ã°ÂÂÂ¼","Ivory Coast":"Ã°ÂÂÂ¨Ã°ÂÂÂ®","Ecuador":"Ã°ÂÂÂªÃ°ÂÂÂ¨",
+  "Netherlands":"Ã°ÂÂÂ³Ã°ÂÂÂ±","Japan":"Ã°ÂÂÂ¯Ã°ÂÂÂµ","Tunisia":"Ã°ÂÂÂ¹Ã°ÂÂÂ³","Belgium":"Ã°ÂÂÂ§Ã°ÂÂÂª","Egypt":"Ã°ÂÂÂªÃ°ÂÂÂ¬",
+  "Iran":"Ã°ÂÂÂ®Ã°ÂÂÂ·","New Zealand":"Ã°ÂÂÂ³Ã°ÂÂÂ¿","Spain":"Ã°ÂÂÂªÃ°ÂÂÂ¸","Cape Verde":"Ã°ÂÂÂ¨Ã°ÂÂÂ»",
+  "Saudi Arabia":"Ã°ÂÂÂ¸Ã°ÂÂÂ¦","Uruguay":"Ã°ÂÂÂºÃ°ÂÂÂ¾","France":"Ã°ÂÂÂ«Ã°ÂÂÂ·","Senegal":"Ã°ÂÂÂ¸Ã°ÂÂÂ³","Norway":"Ã°ÂÂÂ³Ã°ÂÂÂ´",
+  "Argentina":"Ã°ÂÂÂ¦Ã°ÂÂÂ·","Algeria":"Ã°ÂÂÂ©Ã°ÂÂÂ¿","Austria":"Ã°ÂÂÂ¦Ã°ÂÂÂ¹","Jordan":"Ã°ÂÂÂ¯Ã°ÂÂÂ´",
+  "Portugal":"Ã°ÂÂÂµÃ°ÂÂÂ¹","Uzbekistan":"Ã°ÂÂÂºÃ°ÂÂÂ¿","Colombia":"Ã°ÂÂÂ¨Ã°ÂÂÂ´","England":"Ã°ÂÂÂ´Ã³Â ÂÂ§Ã³Â ÂÂ¢Ã³Â ÂÂ¥Ã³Â ÂÂ®Ã³Â ÂÂ§Ã³Â ÂÂ¿",
+  "Croatia":"Ã°ÂÂÂ­Ã°ÂÂÂ·","Ghana":"Ã°ÂÂÂ¬Ã°ÂÂÂ­","Panama":"Ã°ÂÂÂµÃ°ÂÂÂ¦",
 };
 
 const PHASE_LABELS = {
   group:"Fase de Grupos", r32:"Round of 32", r16:"Octavos de Final",
-  qf:"Cuartos de Final", sf:"Semifinales", "3rd":"Tercer Lugar", final:"Gran Final ð"
+  qf:"Cuartos de Final", sf:"Semifinales", "3rd":"Tercer Lugar", final:"Gran Final Ã°ÂÂÂ"
 };
-const DAY_NAMES   = ["Dom","Lun","Mar","MiÃ©","Jue","Vie","SÃ¡b"];
+const DAY_NAMES   = ["Dom","Lun","Mar","MiÃÂ©","Jue","Vie","SÃÂ¡b"];
 const MONTH_NAMES = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago"];
-const PERSONS = ["Vale","Mati","Tomi","MamÃ¡","PapÃ¡"];
-const MEDALS  = ["ð¥","ð¥","ð¥","4ï¸â£","5ï¸â£"];
+const PERSONS = ["Vale","Mati","Tomi","MamÃÂ¡","PapÃÂ¡"];
+const MEDALS  = ["Ã°ÂÂ¥Â","Ã°ÂÂ¥Â","Ã°ÂÂ¥Â","4Ã¯Â¸ÂÃ¢ÂÂ£","5Ã¯Â¸ÂÃ¢ÂÂ£"];
 
-// âââ CONFIG âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ CONFIG Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 var FIREBASE = "https://mundial-924df-default-rtdb.firebaseio.com/polla26";
 
-// âââ STATE ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
-// Each person's predictions stored separately â prevents overwriting others
-// predictions[matchId][person] = [g1, g2]  â merged from all firebase paths
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ STATE Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
+// Each person's predictions stored separately Ã¢ÂÂ prevents overwriting others
+// predictions[matchId][person] = [g1, g2]  Ã¢ÂÂ merged from all firebase paths
 // actuals[matchId] = [g1, g2]
 var predictions = {};
 var actuals     = {};
@@ -313,7 +316,7 @@ var myName      = localStorage.getItem("polla26_name") || null;
 var activePhase = "all";
 var saveTimer   = null;
 
-// âââ SYNC STATUS ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ SYNC STATUS Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 
 function renderTodayMatches() {
   var today = getChileDate(new Date());
@@ -333,7 +336,7 @@ function renderTodayMatches() {
     var scoreHtml = hasResult
       ? '<div class="today-score">'+act[0]+'&ndash;'+act[1]+'</div><div class="today-status">Final</div>'
       : isLive
-        ? '<div class="today-score">&#8226;&#8226;&#8226;</div><div class="today-status">ð´ En vivo</div>'
+        ? '<div class="today-score">&#8226;&#8226;&#8226;</div><div class="today-status">Ã°ÂÂÂ´ En vivo</div>'
         : '<div class="today-time">'+m[2]+' CL</div>';
     return '<div class="today-match '+cls+'">'
       +'<div class="today-group">Grupo '+m[5]+'</div>'
@@ -352,9 +355,9 @@ function setSyncStatus(state, msg) {
   txt.textContent = msg;
 }
 
-// âââ FIREBASE LOAD ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ FIREBASE LOAD Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function loadData() {
-  setSyncStatus("syncing","Cargandoâ¦");
+  setSyncStatus("syncing","CargandoÃ¢ÂÂ¦");
   fetch(FIREBASE + ".json")
     .then(function(r){ return r.json(); })
     .then(function(data) {
@@ -378,11 +381,11 @@ function loadData() {
       setSyncStatus("ok","Sincronizado "+now);
     })
     .catch(function() {
-      setSyncStatus("error","Sin conexiÃ³n");
+      setSyncStatus("error","Sin conexiÃÂ³n");
     });
 }
 
-// âââ FIREBASE SAVE (per-person path) âââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ FIREBASE SAVE (per-person path) Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function saveMyPredictions() {
   if (!myName) return;
   // Extract only this person's predictions
@@ -392,7 +395,7 @@ function saveMyPredictions() {
       mine[mid] = predictions[mid][myName];
     }
   });
-  // PUT to person-specific path â never overwrites others
+  // PUT to person-specific path Ã¢ÂÂ never overwrites others
   fetch(FIREBASE + "/predictions/" + encodeURIComponent(myName) + ".json", {
     method: "PUT",
     headers: {"Content-Type": "application/json"},
@@ -419,12 +422,12 @@ function saveActuals() {
 function saveData() {
   clearTimeout(saveTimer);
   saveTimer = setTimeout(function() {
-    setSyncStatus("syncing","Guardandoâ¦");
+    setSyncStatus("syncing","GuardandoÃ¢ÂÂ¦");
     saveMyPredictions();
   }, 800);
 }
 
-// âââ NAME SELECTOR ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ NAME SELECTOR Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function setMyName(name) {
   myName = name;
   localStorage.setItem("polla26_name", name);
@@ -434,7 +437,7 @@ function setMyName(name) {
   render();
 }
 
-// âââ TIME HELPERS âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ TIME HELPERS Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function chileToday() {
   try { return new Intl.DateTimeFormat("sv",{timeZone:"America/Santiago"}).format(new Date()); }
   catch(e) { return new Date(new Date().getTime()-4*3600000).toISOString().split("T")[0]; }
@@ -458,9 +461,9 @@ function fmtDate(d) {
   var dt = new Date(d+"T12:00:00");
   return DAY_NAMES[dt.getDay()]+" "+dt.getDate()+" "+MONTH_NAMES[dt.getMonth()];
 }
-function flag(t) { return FLAGS[t]||"ð³ï¸"; }
+function flag(t) { return FLAGS[t]||"Ã°ÂÂÂ³Ã¯Â¸Â"; }
 
-// âââ SCORING: 6 exact / 3 goal diff / 1 result ââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ SCORING: 6 exact / 3 goal diff / 1 result Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function calcPts(matchId, person) {
   var mid = String(matchId);
   var act = actuals[mid];
@@ -477,7 +480,7 @@ function totalPts(person) {
   return MATCHES.reduce(function(s,m){ var p=calcPts(m[0],person); return s+(p||0); },0);
 }
 
-// âââ INPUTS âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ INPUTS Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function setPred(matchId, person, idx, val) {
   if (person !== myName) return; // only edit your own
   var mid = String(matchId);
@@ -495,7 +498,7 @@ function setActual(matchId, idx, val) {
   actuals[mid][idx] = (val===""||val===null)?null:parseInt(val);
   clearTimeout(saveTimer);
   saveTimer = setTimeout(function(){
-    setSyncStatus("syncing","Guardandoâ¦");
+    setSyncStatus("syncing","GuardandoÃ¢ÂÂ¦");
     saveActuals();
     var now = new Date().toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"});
     setSyncStatus("ok","Guardado "+now);
@@ -510,12 +513,12 @@ function refreshPts(matchId) {
     if (!el) return;
     var pts = calcPts(matchId, p);
     if (pts===null){el.textContent="";el.className="pred-pts";return;}
-    el.textContent = pts===6?"ð¯ 6pts":pts===4?"â 4pts":pts===2?"â 2pts":"â 0pts";
+    el.textContent = pts===6?"Ã°ÂÂÂ¯ 6pts":pts===4?"Ã¢ÂÂ 4pts":pts===2?"Ã¢ÂÂ 2pts":"Ã¢ÂÂ 0pts";
     el.className = "pred-pts "+(pts===6?"pts-6":pts===4?"pts-3":pts===2?"pts-1":"pts-0");
   });
 }
 
-// âââ LEADERBOARD ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ LEADERBOARD Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function renderLeaderboard() {
   renderTodayMatches();
   var standings = PERSONS.map(function(p){ return {name:p,pts:totalPts(p)}; })
@@ -531,7 +534,7 @@ function renderLeaderboard() {
   }).join("");
 }
 
-// âââ PHASE FILTER âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ PHASE FILTER Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function setPhase(p) {
   activePhase = p;
   document.querySelectorAll(".pbtn").forEach(function(b){ b.classList.remove("active"); });
@@ -539,7 +542,7 @@ function setPhase(p) {
   render();
 }
 
-// âââ RENDER âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ RENDER Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 function render() {
   var today = chileToday();
   var filtered = MATCHES.filter(function(m){
@@ -554,7 +557,7 @@ function render() {
 
   var html = "";
   if (!myName) {
-    html += '<div class="no-name-banner">ð Selecciona tu nombre arriba para ingresar tus pronÃ³sticos</div>';
+    html += '<div class="no-name-banner">Ã°ÂÂÂ Selecciona tu nombre arriba para ingresar tus pronÃÂ³sticos</div>';
   }
 
   var lastDate = null;
@@ -563,14 +566,14 @@ function render() {
     if (date !== lastDate) {
       lastDate = date;
       var dt = new Date(date+"T12:00:00");
-      var dl = DAY_NAMES[dt.getDay()]+" "+dt.getDate()+" "+MONTH_NAMES[dt.getMonth()]+" Â· "+PHASE_LABELS[phase];
+      var dl = DAY_NAMES[dt.getDay()]+" "+dt.getDate()+" "+MONTH_NAMES[dt.getMonth()]+" ÃÂ· "+PHASE_LABELS[phase];
       html += '<div class="phase-hdr">'+dl+'</div>';
     }
     var st = getStatus(date,time);
     var cardClass = st==="past"?"is-past":(st==="live"||st==="today")?"is-today":phase==="final"?"is-final":"";
     var statusHtml = st==="live"
-      ?'<div class="match-status status-live">ð´ EN VIVO</div>'
-      :st==="today"?'<div class="match-status status-today">â° Hoy</div>'
+      ?'<div class="match-status status-live">Ã°ÂÂÂ´ EN VIVO</div>'
+      :st==="today"?'<div class="match-status status-today">Ã¢ÂÂ° Hoy</div>'
       :st==="past"?'<div class="match-status status-past">Finalizado</div>':"";
     var canPred = st==="future"||st==="today";
     var mid = String(id);
@@ -584,7 +587,7 @@ function render() {
       var dis = canEdit?"":"disabled";
       var meClass = isMe?" is-me":"";
       return '<div class="pred-cell">'+
-        '<div class="pred-name'+meClass+'">'+p+(isMe?" âï¸":"")+'</div>'+
+        '<div class="pred-name'+meClass+'">'+p+(isMe?" Ã¢ÂÂÃ¯Â¸Â":"")+'</div>'+
         '<div class="pred-inputs">'+
           '<input class="pred-inp'+meClass+'" type="number" min="0" max="20" value="'+v1+'" placeholder="?" '+
             'oninput="setPred('+id+',\''+p+'\',0,this.value)" '+dis+'>'+
@@ -627,7 +630,7 @@ function render() {
   MATCHES.forEach(function(m){ refreshPts(m[0]); });
 }
 
-// âââ ESPN AUTO-RESULTS ââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂ ESPN AUTO-RESULTS Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ
 var ESPN_BASE = "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard";
 var lastApiFetch = 0;
 
@@ -638,8 +641,8 @@ var ESPN_NAME_MAP = {
   "Canada":"Canada","Qatar":"Qatar","Switzerland":"Switzerland",
   "Brazil":"Brazil","Morocco":"Morocco","Haiti":"Haiti","Scotland":"Scotland",
   "United States":"USA","USA":"USA","Paraguay":"Paraguay","Australia":"Australia",
-  "Germany":"Germany","CuraÃ§ao":"CuraÃ§ao","Curacao":"CuraÃ§ao",
-  "Ivory Coast":"Ivory Coast","CÃ´te d'Ivoire":"Ivory Coast",
+  "Germany":"Germany","CuraÃÂ§ao":"CuraÃÂ§ao","Curacao":"CuraÃÂ§ao",
+  "Ivory Coast":"Ivory Coast","CÃÂ´te d'Ivoire":"Ivory Coast",
   "Ecuador":"Ecuador","Netherlands":"Netherlands","Japan":"Japan",
   "Tunisia":"Tunisia","Belgium":"Belgium","Egypt":"Egypt",
   "Iran":"Iran","IR Iran":"Iran","New Zealand":"New Zealand",
@@ -650,7 +653,7 @@ var ESPN_NAME_MAP = {
   "Portugal":"Portugal","Uzbekistan":"Uzbekistan","Colombia":"Colombia",
   "England":"England","Croatia":"Croatia","Ghana":"Ghana","Panama":"Panama",
   "Bosnia-Herzegovina":"Bosnia-Herzegovina","Bosnia and Herzegovina":"Bosnia-Herzegovina",
-  "Sweden":"Sweden","TÃ¼rkiye":"TÃ¼rkiye","Turkey":"TÃ¼rkiye",
+  "Sweden":"Sweden","TÃÂ¼rkiye":"TÃÂ¼rkiye","Turkey":"TÃÂ¼rkiye",
   "DR Congo":"DR Congo","Congo DR":"DR Congo","Democratic Republic of Congo":"DR Congo",
   "Iraq":"Iraq"
 };
@@ -729,7 +732,7 @@ function fetchApiResults() {
       saveActuals(); renderLeaderboard(); render(); renderTodayMatches();
       MATCHES.forEach(function(m){ refreshPts(m[0]); });
       var t = new Date().toLocaleTimeString("es-CL",{hour:"2-digit",minute:"2-digit"});
-      setSyncStatus("ok","â½ Resultados actualizados "+t);
+      setSyncStatus("ok","Ã¢ÂÂ½ Resultados actualizados "+t);
     }
   })
   .catch(function(e){ console.log("ESPN API:", e); });
